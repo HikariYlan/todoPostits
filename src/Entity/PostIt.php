@@ -4,7 +4,9 @@ namespace App\Entity;
 
 use App\Enum\Status;
 use App\Repository\PostItRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation\Timestampable;
 
 #[ORM\Entity(repositoryClass: PostItRepository::class)]
 class PostIt
@@ -21,13 +23,14 @@ class PostIt
     private ?string $description = null;
 
     #[ORM\Column]
-    private \DateTime $creationDate;
+    #[Timestampable(on: 'creation')]
+    private DateTime $creationDate;
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTime $finishDate = null;
+    private ?DateTime $finishDate = null;
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTime $dueDate = null;
+    private ?DateTime $dueDate = null;
 
     #[ORM\Column(type: 'string', enumType: Status::class)]
     private string $status;
@@ -65,36 +68,36 @@ class PostIt
         return $this;
     }
 
-    public function getCreationDate(): \DateTime
+    public function getCreationDate(): DateTime
     {
         return $this->creationDate;
     }
 
-    public function setCreationDate(\DateTime $creationDate): static
+    public function setCreationDate(DateTime $creationDate): static
     {
         $this->creationDate = $creationDate;
 
         return $this;
     }
 
-    public function getFinishDate(): ?\DateTime
+    public function getFinishDate(): ?DateTime
     {
         return $this->finishDate;
     }
 
-    public function setFinishDate(?\DateTime $finishDate): static
+    public function setFinishDate(?DateTime $finishDate): static
     {
         $this->finishDate = $finishDate;
 
         return $this;
     }
 
-    public function getDueDate(): ?\DateTime
+    public function getDueDate(): ?DateTime
     {
         return $this->dueDate;
     }
 
-    public function setDueDate(?\DateTime $dueDate): static
+    public function setDueDate(?DateTime $dueDate): static
     {
         $this->dueDate = $dueDate;
 
