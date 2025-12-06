@@ -32,6 +32,10 @@ class PostIt
     #[ORM\Column(type: 'string', enumType: Status::class)]
     private string $status;
 
+    #[ORM\ManyToOne(inversedBy: 'postits')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $owner = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +109,18 @@ class PostIt
     public function setStatus(string $status): static
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): static
+    {
+        $this->owner = $owner;
 
         return $this;
     }

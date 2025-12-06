@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -31,6 +33,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private string $password;
+
+    /**
+     * @var Collection<int, PostIt>
+     */
+    #[ORM\OneToMany(targetEntity: PostIt::class, mappedBy: 'owner', orphanRemoval: true)]
+    private Collection $postits;
+
+    public function __construct()
+    {
+        $this->postits = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -111,5 +124,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function eraseCredentials(): void
     {
         // @deprecated, to be removed when upgrading to Symfony 8
+    }
+
+    /**
+     * @return Collection<int, PostIt>
+     */
+    public function getPostits(): Collection
+    {
+        return $this->postits;
+    }
+
+    public function addPostit(PostIt $postit): static
+    {
+        if (!$this->postits->contains($postit)) {
+            $this->postits->add($postit);
+            $postit->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removePostit(PostIt $postit): static
+    {
+        if ($this->postits->removeElement($postit)) {
+            // set the owning side to null (unless already changed)
+            if ($postit->getOwner() === $this) {
+                $postit->setOwner(null);
+            }
+        }
+
+        return $this;
     }
 }
