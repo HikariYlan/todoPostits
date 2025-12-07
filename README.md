@@ -57,36 +57,6 @@ If you want to use a fake account, there is always the 2 same accounts when the 
 After a successful authentication, you will be redirected to your "cork board". 
 From there, you can see all of your Post-its!
 
-### 🎨 Styling with Tailwind CSS
-
-This application uses Tailwind CSS for a modern and beautiful design. The interface features:
-
-- **Responsive design** - Works perfectly on mobile, tablet, and desktop
-- **Modern color scheme** - Gradient backgrounds and colorful post-it cards
-- **Interactive elements** - Smooth hover effects and transitions
-- **Icon integration** - Beautiful SVG icons throughout the interface
-- **Custom post-it colors** - Each status has its own color scheme:
-  - 🔘 Pending (gray)
-  - 🔵 To Do (blue)
-  - 🟠 On Going (orange)
-  - 🟢 Finished (green)
-
-#### Tailwind Development
-
-If you modify the templates and need to recompile the CSS:
-
-```shell
-npm run build:css
-```
-
-For active development with automatic recompilation:
-
-```shell
-npm run watch:css
-```
-
-For more details about Tailwind configuration, see [TAILWIND.md](TAILWIND.md).
-
 ## Out of context tip:
 
 If you want to ignore you IDEs folder for every project, and you don't want to do it everytime you start a new one:
