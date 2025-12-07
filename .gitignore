@@ -23,3 +23,10 @@
 /.php-cs-fixer.php
 /.php-cs-fixer.cache
 ###< friendsofphp/php-cs-fixer ###
+
+###> node.js & tailwind ###
+/node_modules/
+/package-lock.json
+/public/output.css
+###< node.js & tailwind ###
+
