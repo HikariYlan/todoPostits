@@ -23,7 +23,7 @@ class PostIt
     private ?string $description = null;
 
     #[ORM\Column]
-    #[Timestampable(on: 'creation')]
+    #[Timestampable(on: 'create')]
     private DateTime $creationDate;
 
     #[ORM\Column(nullable: true)]
@@ -33,7 +33,7 @@ class PostIt
     private ?DateTime $dueDate = null;
 
     #[ORM\Column(type: 'string', enumType: Status::class)]
-    private string $status;
+    private Status $status;
 
     #[ORM\ManyToOne(inversedBy: 'postits')]
     #[ORM\JoinColumn(nullable: false)]
@@ -104,12 +104,12 @@ class PostIt
         return $this;
     }
 
-    public function getStatus(): string
+    public function getStatus(): Status
     {
         return $this->status;
     }
 
-    public function setStatus(string $status): static
+    public function setStatus(Status $status): static
     {
         $this->status = $status;
 
