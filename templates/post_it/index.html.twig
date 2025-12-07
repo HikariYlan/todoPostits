@@ -4,22 +4,58 @@
 
 {% block body %}
 
-<div class="board">
-    <div class="board-item">
-        <h1 class="board-title">PENDING</h1>
-        {{ include('post_it/_show.html.twig', {postIts: pending}) }}
+<div class="mb-8 text-center">
+    <h1 class="text-4xl font-bold text-gray-800 mb-2">📌 My Cork Board</h1>
+    <p class="text-gray-600">Organize your tasks with style</p>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-gray-400">
+        <div class="flex items-center justify-center mb-4">
+            <div class="bg-gray-100 rounded-full p-3">
+                <svg class="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </div>
+        </div>
+        <h2 class="text-2xl font-bold text-center text-gray-700 mb-4">PENDING</h2>
+        {{ include('post_it/_show.html.twig', {postIts: pending, status: 'pending'}) }}
     </div>
-    <div class="board-item">
-        <h1 class="board-title">TO DO</h1>
-        {{ include('post_it/_show.html.twig', {postIts: toDo}) }}
+
+    <div class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-blue-400">
+        <div class="flex items-center justify-center mb-4">
+            <div class="bg-blue-100 rounded-full p-3">
+                <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                </svg>
+            </div>
+        </div>
+        <h2 class="text-2xl font-bold text-center text-blue-700 mb-4">TO DO</h2>
+        {{ include('post_it/_show.html.twig', {postIts: toDo, status: 'todo'}) }}
     </div>
-    <div class="board-item">
-        <h1 class="board-title">ON GOING</h1>
-        {{ include('post_it/_show.html.twig', {postIts: onGoing}) }}
+
+    <div class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-orange-400">
+        <div class="flex items-center justify-center mb-4">
+            <div class="bg-orange-100 rounded-full p-3">
+                <svg class="w-8 h-8 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+            </div>
+        </div>
+        <h2 class="text-2xl font-bold text-center text-orange-700 mb-4">ON GOING</h2>
+        {{ include('post_it/_show.html.twig', {postIts: onGoing, status: 'ongoing'}) }}
     </div>
-    <div class="board-item">
-        <h1 class="board-title">FINISHED</h1>
-        {{ include('post_it/_show.html.twig', {postIts: finished}) }}
+
+    <div class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-green-400">
+        <div class="flex items-center justify-center mb-4">
+            <div class="bg-green-100 rounded-full p-3">
+                <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </div>
+        </div>
+        <h2 class="text-2xl font-bold text-center text-green-700 mb-4">FINISHED</h2>
+        {{ include('post_it/_show.html.twig', {postIts: finished, status: 'finished'}) }}
     </div>
 </div>
 {% endblock %}

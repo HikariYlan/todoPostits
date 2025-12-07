@@ -1,17 +1,84 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}TODOs PostIts - PostIt N°{{ postIt.id }}{% endblock %}
+{% block title %}TODOs PostIts - Post-It #{{ postIt.id }}{% endblock %}
 
 {% block body %}
 
-<div class="post_it-display">
-    <div>
-        <h1>{{ postIt.title }}</h1>
-        <p>{{ postIt.description ? ["Description: ", postIt.description]|join(" ") : "No description" }}</p>
-        <p>Created: {{ postIt.creationDate|date('j F Y, H:i') }}</p>
-        <p>{{ postIt.dueDate ? ["Due date: ", postIt.dueDate|date('j F Y')]|join(" ") : "No due date" }}</p>
-        <p>{{ postIt.finishDate ? ["Finished:", postIt.finishDate|date('j F Y')]|join(" ") : "Not finished yet"}}</p>
-        <p>{{ ["Status: ", postIt.status.value]|join(" ") }}</p>
+<div class="max-w-3xl mx-auto">
+    <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
+        <div class="bg-gradient-to-r from-teal-500 to-cyan-500 p-6">
+            <h1 class="text-3xl font-bold text-white flex items-center">
+                <svg class="w-8 h-8 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+                {{ postIt.title }}
+            </h1>
+        </div>
+
+        <div class="p-8 space-y-6">
+            <div class="flex items-start space-x-3">
+                <div class="bg-blue-100 rounded-full p-2 flex-shrink-0">
+                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-1">Description</h3>
+                    <p class="text-lg text-gray-800">{{ postIt.description ? postIt.description : "No description" }}</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-gray-50 rounded-lg p-4 border-l-4 border-gray-400">
+                    <div class="flex items-center mb-2">
+                        <svg class="w-5 h-5 mr-2 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span class="text-sm font-semibold text-gray-600 uppercase">Created</span>
+                    </div>
+                    <p class="text-lg font-medium text-gray-800">{{ postIt.creationDate|date('m/d/Y, h:i A') }}</p>
+                </div>
+
+                <div class="bg-orange-50 rounded-lg p-4 border-l-4 border-orange-400">
+                    <div class="flex items-center mb-2">
+                        <svg class="w-5 h-5 mr-2 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                        <span class="text-sm font-semibold text-orange-600 uppercase">Due Date</span>
+                    </div>
+                    <p class="text-lg font-medium text-gray-800">{{ postIt.dueDate ? postIt.dueDate|date('m/d/Y') : "No due date" }}</p>
+                </div>
+
+                <div class="bg-green-50 rounded-lg p-4 border-l-4 border-green-400">
+                    <div class="flex items-center mb-2">
+                        <svg class="w-5 h-5 mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span class="text-sm font-semibold text-green-600 uppercase">Finish Date</span>
+                    </div>
+                    <p class="text-lg font-medium text-gray-800">{{ postIt.finishDate ? postIt.finishDate|date('m/d/Y') : "Not finished yet" }}</p>
+                </div>
+
+                <div class="bg-purple-50 rounded-lg p-4 border-l-4 border-purple-400">
+                    <div class="flex items-center mb-2">
+                        <svg class="w-5 h-5 mr-2 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                        <span class="text-sm font-semibold text-purple-600 uppercase">Status</span>
+                    </div>
+                    <p class="text-lg font-medium text-gray-800">{{ postIt.status.value }}</p>
+                </div>
+            </div>
+
+            <div class="flex justify-center pt-4">
+                <a href="{{ path('app_cork_board') }}" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-teal-500 to-cyan-500 text-white font-semibold rounded-lg shadow-lg hover:from-teal-600 hover:to-cyan-600 transition-all duration-200 transform hover:scale-105">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    Back to cork board
+                </a>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
