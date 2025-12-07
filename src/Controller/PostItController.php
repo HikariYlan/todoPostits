@@ -46,8 +46,22 @@ final class PostItController extends AbstractController
         ]);
     }
 
+    #[Route('/post_it/random', name: 'app_post_it_random', methods: 'GET')]
+    public function randomPostIt(PostItRepository $postItRepository, UserRepository $userRepository): Response
+    {
+        $unfinishedPostIts = $postItRepository->getUnfinishedPostitsFromUser(
+            $userRepository->getIdFromCurrentUser(
+                $this->getUser()->getUserIdentifier()
+            )
+        );
+        $randomPostIt = $unfinishedPostIts ? $unfinishedPostIts[array_rand($unfinishedPostIts)]->getId() : 0;
+        return $this->redirectToRoute('app_post_it_details', [
+            'id' => $randomPostIt,
+        ]);
+    }
+
     #[Route('/post_it/{id}', name: 'app_post_it_details', requirements: ['id' => '\d+'], methods: 'GET')]
-    public function showDetails(PostIt $postIt): Response
+    public function showDetails(?PostIt $postIt): Response
     {
         return $this->render('post_it/show.html.twig', [
             'postIt' => $postIt,
