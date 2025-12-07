@@ -16,6 +16,15 @@ class PostItRepository extends ServiceEntityRepository
         parent::__construct($registry, PostIt::class);
     }
 
+    public function getPostitsFromUser(mixed $userId): mixed
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.owner = :userId')
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return PostIt[] Returns an array of PostIt objects
     //     */
