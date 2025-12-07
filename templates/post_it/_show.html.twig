@@ -1,0 +1,14 @@
+<ul>
+    {% if postIts is not empty %}
+        {% for postIt in postIts %}
+            <a href={{ path('app_post_it_details', {id: postIt.id}) }}>
+                <li class="post_it-item">
+                    <h4>{{ postIt.title }}</h4>
+                    <p>Created: {{ postIt.creationDate|date('j F Y, H:i') }}</p>
+                    <p>{{ postIt.dueDate ? ["Due date: ", postIt.dueDate|date('j F Y')]|join(" ") }}</p>
+                    <p>{{ postIt.finishDate ? ["Finished:", postIt.finishDate|date('j F Y')]|join(" ")}}</p>
+                </li>
+            </a>
+        {% endfor %}
+    {% endif %}
+</ul>
