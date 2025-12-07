@@ -25,6 +25,16 @@ class PostItRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function getUnfinishedPostitsFromUser(mixed $userId): mixed
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.owner = :userId')
+            ->andWhere('LOWER(p.status) LIKE \'on_going\' OR LOWER(p.status) LIKE \'to_do\'')
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return PostIt[] Returns an array of PostIt objects
     //     */
