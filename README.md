@@ -57,9 +57,23 @@ If you want to use a fake account, there is always the 2 same accounts when the 
 After a successful authentication, you will be redirected to your "cork board". 
 From there, you can see all of your Post-its!
 
+## Policy about the use of AI
+
+As a small team of only one, I made the choice to use AI to help with the development of this application.
+HOWEVER, only 2 things are made with AI:
+- The commits
+- The design
+
+The core mechanics of this application are hand-made and/or made by Symfony (like the register/login form that are effective enough for my usage).
+AI is inevitably going to be a part of the process of web development, and as long as I wanted to avoid using it, I came to the conclusion that I have to live with my time.
+AI is a TOOL, here to HELP, not REPLACE. I did not spend 3 years of my life studying for a computer science degree only to be replaced by a CLANKER.
+
+If you understand my choice and respect it, I thank you very much. If not, I will gladly accept it, and we can go on our respective life.
+
+
 ## Out of context tip:
 
-If you want to ignore you IDEs folder for every project, and you don't want to do it everytime you start a new one:
+If you want to ignore your IDEs folder for every project, and you don't want to do it everytime you start a new one:
 
 ```shell
 nano ~/.gitignore_global
