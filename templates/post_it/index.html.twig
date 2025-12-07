@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TODOs PostIts! - Cork Board{% endblock %}
+
+{% block body %}
+
+<div class="board">
+    <div class="board-item">
+        <h1 class="board-title">PENDING</h1>
+        {{ include('post_it/_show.html.twig', {postIts: pending}) }}
+    </div>
+    <div class="board-item">
+        <h1 class="board-title">TO DO</h1>
+        {{ include('post_it/_show.html.twig', {postIts: toDo}) }}
+    </div>
+    <div class="board-item">
+        <h1 class="board-title">ON GOING</h1>
+        {{ include('post_it/_show.html.twig', {postIts: onGoing}) }}
+    </div>
+    <div class="board-item">
+        <h1 class="board-title">FINISHED</h1>
+        {{ include('post_it/_show.html.twig', {postIts: finished}) }}
+    </div>
+</div>
+{% endblock %}
