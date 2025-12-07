@@ -8,6 +8,8 @@
 - Symfony >= 7.4
 - Composer >= 2.8
 - Docker daemon (Docker Desktop for Windows users)
+- Node.js >= 18.0 (for Tailwind CSS)
+- npm >= 9.0 (for Tailwind CSS)
 
 #### Installation
 
@@ -19,6 +21,8 @@ git clone https://github.com/HikariYlan/todoPostits.git
 cd todoPostits/
 docker compose up -d
 composer install
+npm install
+npm run build:css
 composer db
 ```
 
@@ -27,7 +31,9 @@ Explanations in order:
 2. Place the terminal in the newly created repertory
 3. Start the containers for the database and its administration panel 
 4. Install all the required dependencies for the project
-5. Create the database and populates it with fixtures (fake data)
+5. Install Node.js dependencies (including Tailwind CSS)
+6. Compile Tailwind CSS for the application
+7. Create the database and populates it with fixtures (fake data)
 
 ### How to use
 
@@ -50,6 +56,36 @@ If you want to use a fake account, there is always the 2 same accounts when the 
 
 After a successful authentication, you will be redirected to your "cork board". 
 From there, you can see all of your Post-its!
+
+### 🎨 Styling with Tailwind CSS
+
+This application uses Tailwind CSS for a modern and beautiful design. The interface features:
+
+- **Responsive design** - Works perfectly on mobile, tablet, and desktop
+- **Modern color scheme** - Gradient backgrounds and colorful post-it cards
+- **Interactive elements** - Smooth hover effects and transitions
+- **Icon integration** - Beautiful SVG icons throughout the interface
+- **Custom post-it colors** - Each status has its own color scheme:
+  - 🔘 Pending (gray)
+  - 🔵 To Do (blue)
+  - 🟠 On Going (orange)
+  - 🟢 Finished (green)
+
+#### Tailwind Development
+
+If you modify the templates and need to recompile the CSS:
+
+```shell
+npm run build:css
+```
+
+For active development with automatic recompilation:
+
+```shell
+npm run watch:css
+```
+
+For more details about Tailwind configuration, see [TAILWIND.md](TAILWIND.md).
 
 ## Out of context tip:
 
