@@ -4,7 +4,6 @@ namespace App\Factory;
 
 use App\Entity\PostIt;
 use App\Enum\Status;
-use App\Story\UserStory;
 use Zenstruck\Foundry\LazyValue;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 
@@ -33,8 +32,10 @@ final class PostItFactory extends PersistentProxyObjectFactory
 
     protected function initialize(): static
     {
-        return $this->afterInstantiate(function(PostIt $postIt): void {
-            if ($postIt->getStatus() == Status::FINISHED) $postIt->setFinishDate(new \DateTime("+2 days"));
+        return $this->afterInstantiate(function (PostIt $postIt): void {
+            if (Status::FINISHED == $postIt->getStatus()) {
+                $postIt->setFinishDate(new \DateTime('+2 days'));
+            }
         })
         ;
     }

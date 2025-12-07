@@ -14,18 +14,24 @@ class PostItFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         PostItFactory::createMany(50, function () {
-            if (random_int(0, 1) == 1) $dueDate = new \DateTime('+20 days');
+            if (1 == random_int(0, 1)) {
+                $dueDate = new \DateTime('+20 days');
+            }
+
             return [
-                "owner" => UserStory::getRandom('random_users'),
-                "dueDate" => $dueDate ?? null,
+                'owner' => UserStory::getRandom('random_users'),
+                'dueDate' => $dueDate ?? null,
             ];
         });
 
         PostItFactory::createMany(10, function () {
-            if (random_int(0, 1) == 1) $dueDate = new \DateTime('+20 days');
+            if (1 == random_int(0, 1)) {
+                $dueDate = new \DateTime('+20 days');
+            }
+
             return [
-                "owner" => UserFactory::findBy([ 'username' => 'ylan'])[0],
-                "dueDate" => $dueDate ?? null,
+                'owner' => UserFactory::findBy(['username' => 'ylan'])[0],
+                'dueDate' => $dueDate ?? null,
             ];
         });
     }

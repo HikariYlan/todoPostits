@@ -18,8 +18,8 @@ final class UserStory extends Story
             UserFactory::createOne([
                 'username' => 'hikari',
                 'password' => 'user',
-                'roles' => ['ROLE_USER']
-            ])
+                'roles' => ['ROLE_USER'],
+            ]),
         ]);
 
         $this->addToPool('random_users', UserFactory::createMany(10));
