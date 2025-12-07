@@ -95,6 +95,9 @@
             "php bin/console doctrine:database:create --if-not-exists",
             "php bin/console doctrine:migrations:migrate --no-interaction",
             "php bin/console doctrine:fixtures:load --no-interaction"
+        ],
+        "fix": [
+            "php vendor/bin/php-cs-fixer fix --show-progress none"
         ]
     },
     "conflict": {
@@ -108,6 +111,7 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^4.3",
+        "friendsofphp/php-cs-fixer": "^3.91",
         "phpunit/phpunit": "^12.4",
         "symfony/browser-kit": "7.4.*",
         "symfony/css-selector": "7.4.*",
