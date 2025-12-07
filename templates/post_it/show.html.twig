@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PostItController!{% endblock %}
+
+{% block body %}
+
+<div class="post_it-display">
+    <div>
+        <h1>{{ postIt.title }}</h1>
+        <p>{{ postIt.description ? ["Description: ", postIt.description]|join(" ") : "No description" }}</p>
+        <p>Created: {{ postIt.creationDate|date('j F Y, H:i') }}</p>
+        <p>{{ postIt.dueDate ? ["Due date: ", postIt.dueDate|date('j F Y')]|join(" ") : "No due date" }}</p>
+        <p>{{ postIt.finishDate ? ["Finished:", postIt.finishDate|date('j F Y')]|join(" ") : "Not finished yet"}}</p>
+        <p>{{ ["Status: ", postIt.status.value]|join(" ") }}</p>
+    </div>
+</div>
+{% endblock %}
