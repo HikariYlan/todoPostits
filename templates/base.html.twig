@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}TODOs PostIts!{% endblock %}</title>
         <link rel="icon" href="{{ asset("/images/icon.svg") }}">
         {% block stylesheets %}
         {% endblock %}
@@ -12,7 +12,16 @@
         {% endblock %}
     </head>
     <body>
+    {% if app.user %}
+        <div class="navbar">
+            <h3>Welcome, {{ app.user.username }}</h3>
+            <h3><a href={{ path('app_logout') }}>Log out</a></h3>
+            <h3>Choose a random Post-It!</h3>
+            <h3>Play a random game!</h3>
+        </div>
+    {% endif %}
         {% block body %}{% endblock %}
+        <button><a href={{ path('app_cork_board') }}>Return to the cork board</a></button>
         <footer class="footer">
             ©2025-{{ "now"|date("Y") }} <a href="https://github.com/HikariYlan">Hikari / Ylan</a> | Made with ❤️
         </footer>
