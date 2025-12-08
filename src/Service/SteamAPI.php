@@ -41,8 +41,31 @@ class SteamAPI
                 'steamid' => $userSteamId,
                 'format' => 'json',
                 'include_appinfo' => 'true',
+                'include_played_free_games' => 'true',
             ],
         ])->toArray()['response']['games'];
+    }
+
+    /**
+     * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws ClientExceptionInterface
+     */
+    public function getUserSummary(string $userSteamId): array
+    {
+        if ('not_found' == $userSteamId) {
+            return [];
+        }
+
+        return $this->client->request('GET', self::BASE_URL.'/ISteamUser/GetPlayerSummaries/v0002/', [
+            'query' => [
+                'key' => $this->APIKey,
+                'steamids' => $userSteamId,
+                'format' => 'json',
+            ],
+        ])->toArray()['response']['players'][0];
     }
 
     #[AsTwigFunction('getImage')]
