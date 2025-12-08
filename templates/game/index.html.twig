@@ -1,17 +1,52 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}TODOs PostIt! - Reward{% endblock %}
+{% block title %}TODOs PostIt! - Game Library{% endblock %}
 
 {% block body %}
-<div>
-    {% if games is empty %}
-        <h1>No SteamID found, or you have no games on this Steam account!</h1>
-    {% else %}
-        <h1>The random game will be selected from your library:</h1>
-        {% for game in games %}
-            {{ include('game/_show.html.twig', game) }}
-        {% endfor %}
-    {% endif %}
+<div class="mb-8 text-center">
+    <h1 class="text-4xl font-bold text-gray-800 mb-2">🎮 My Game Library</h1>
+    <p class="text-gray-600">Pick a random game from your Steam library</p>
 </div>
-    <a href="{{ path('app_games_random') }}">Pick a random one!</a>
+
+{% if games is empty %}
+    <div class="max-w-2xl mx-auto">
+        <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
+            <div class="p-8 text-center">
+                <svg class="w-24 h-24 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">No Games Found</h2>
+                <p class="text-gray-600 text-lg mb-6">
+                    No SteamID found, or you have no games on this Steam account!
+                </p>
+                <a href="{{ path('app_sticky_board') }}" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-500 to-indigo-500 text-white font-semibold rounded-lg shadow-lg hover:from-purple-600 hover:to-indigo-600 transition-all duration-200 transform hover:scale-105">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    Back to sticky notes board
+                </a>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="max-w-6xl mx-auto mb-8">
+        <div class="bg-gradient-to-r from-purple-500 to-indigo-500 rounded-2xl shadow-xl p-6 text-center">
+            <p class="text-white text-lg mb-4">
+                You have <span class="font-bold text-2xl">{{ games|length }}</span> games in your library
+            </p>
+            <a href="{{ path('app_games_random') }}" class="inline-flex items-center px-8 py-4 bg-white text-purple-600 font-bold rounded-lg shadow-lg hover:bg-gray-100 transition-all duration-200 transform hover:scale-105">
+                <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                Pick a random game!
+            </a>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        {% for game in games %}
+            {{ include('game/_show.html.twig', {game: game}) }}
+        {% endfor %}
+    </div>
+{% endif %}
 {% endblock %}
