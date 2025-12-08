@@ -1,18 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello GameController!{% endblock %}
+{% block title %}TODOs PostIt! - Reward{% endblock %}
 
 {% block body %}
 <div>
     {% if games is empty %}
         <h1>No SteamID found, or you have no games on this Steam account!</h1>
     {% else %}
+        <h1>The random game will be selected from your library:</h1>
         {% for game in games %}
-            <div style="display: flex; margin: 0.5em; gap: 5px">
-                <img src={{ getImage(game.appid, game.img_icon_url) }} alt="{{ game.name }}">
-                <p>{{ game.name }}</p>
-            </div>
+            {{ include('game/_show.html.twig', game) }}
         {% endfor %}
     {% endif %}
 </div>
+    <a href="{{ path('app_games_random') }}">Pick a random one!</a>
 {% endblock %}
