@@ -30,6 +30,10 @@ class SteamAPI
      */
     public function getUserGames(string $userSteamId): array
     {
+        if ('not_found' == $userSteamId) {
+            return [];
+        }
+
         return $this->client->request('GET', self::BASE_URL.'/IPlayerService/GetOwnedGames/v0001/', [
             'query' => [
                 'key' => $this->APIKey,
@@ -37,6 +41,6 @@ class SteamAPI
                 'format' => 'json',
                 'include_appinfo' => 'true',
             ],
-        ])->toArray()['response'];
+        ])->toArray()['response']['games'];
     }
 }
