@@ -83,6 +83,9 @@ final class PostItController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($postIt);
+            if (Status::FINISHED === $postIt->getStatus()) {
+                $postIt->setFinishDate(new \DateTime());
+            }
             $entityManager->flush();
 
             return $this->redirectToRoute('app_sticky_board');
