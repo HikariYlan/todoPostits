@@ -8,6 +8,7 @@ use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Twig\Attribute\AsTwigFunction;
 
 class SteamAPI
 {
@@ -42,5 +43,11 @@ class SteamAPI
                 'include_appinfo' => 'true',
             ],
         ])->toArray()['response']['games'];
+    }
+
+    #[AsTwigFunction('getImage')]
+    public function getGameImage(string $gameId, string $imageHash): string
+    {
+        return "http://media.steampowered.com/steamcommunity/public/images/apps/$gameId/$imageHash.jpg";
     }
 }
