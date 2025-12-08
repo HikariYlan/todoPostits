@@ -30,21 +30,32 @@
     </div>
 {% else %}
     <div class="max-w-6xl mx-auto mb-8">
-        <div class="bg-gradient-to-r from-purple-500 to-indigo-500 rounded-2xl shadow-xl p-6 text-center">
-            <p class="text-white text-lg mb-4">
-                You have <span class="font-bold text-2xl">{{ games|length }}</span> games in your library
-            </p>
-            <a href="{{ path('app_games_random') }}" class="inline-flex items-center px-8 py-4 bg-white text-purple-600 font-bold rounded-lg shadow-lg hover:bg-gray-100 transition-all duration-200 transform hover:scale-105">
-                <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-                Pick a random game!
-            </a>
+        <div class="bg-gradient-to-r from-purple-500 to-indigo-500 rounded-2xl shadow-xl p-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <img src="{{ avatar }}" alt="Steam Avatar" class="w-16 h-16 rounded-full shadow-md border-2 border-white">
+                    <div>
+                        <p class="text-purple-200 text-sm uppercase font-semibold">Steam Account</p>
+                        <p class="text-white text-xl font-bold">{{ username }}</p>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <p class="text-white text-lg">
+                        <span class="font-bold text-3xl">{{ games|length }}</span> games
+                    </p>
+                </div>
+                <a href="{{ path('app_games_random') }}" class="inline-flex items-center px-8 py-4 bg-white text-purple-600 font-bold rounded-lg shadow-lg hover:bg-gray-100 transition-all duration-200 transform hover:scale-105">
+                    <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Pick a random game!
+                </a>
+            </div>
         </div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {% for game in games %}
+        {% for game in games|sort((a, b) => a.playtime_forever < b.playtime_forever) %}
             {{ include('game/_show.html.twig', {game: game}) }}
         {% endfor %}
     </div>
