@@ -4,8 +4,12 @@
 
 {% block body %}
 <div>
-    {% for game in games %}
-        <p>{{ game.name }}</p>
-    {% endfor %}
+    {% if games is empty %}
+        <h1>No SteamID found, or you have no games on this Steam account!</h1>
+    {% else %}
+        {% for game in games %}
+            <p>{{ game.name }}</p>
+        {% endfor %}
+    {% endif %}
 </div>
 {% endblock %}
