@@ -14,6 +14,6 @@ final class HomeController extends AbstractController
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
         }
-        return $this->redirectToRoute('app_cork_board');
+        return $this->redirectToRoute('app_sticky_board');
     }
 }
