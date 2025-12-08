@@ -8,7 +8,10 @@
         <h1>No SteamID found, or you have no games on this Steam account!</h1>
     {% else %}
         {% for game in games %}
-            <p>{{ game.name }}</p>
+            <div style="display: flex; margin: 0.5em; gap: 5px">
+                <img src={{ getImage(game.appid, game.img_icon_url) }} alt="{{ game.name }}">
+                <p>{{ game.name }}</p>
+            </div>
         {% endfor %}
     {% endif %}
 </div>
