@@ -4,15 +4,21 @@ namespace App\Controller;
 
 use App\Entity\PostIt;
 use App\Enum\Status;
+use App\Form\PostItType;
 use App\Repository\PostItRepository;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\OptimisticLockException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class PostItController extends AbstractController
 {
-    #[Route('/cork_board', name: 'app_cork_board')]
+    #[Route('/sticky_board', name: 'app_sticky_board')]
     public function index(PostItRepository $postItRepository, UserRepository $userRepository): Response
     {
         if ($this->getUser()) {
@@ -55,6 +61,7 @@ final class PostItController extends AbstractController
             )
         );
         $randomPostIt = $unfinishedPostIts ? $unfinishedPostIts[array_rand($unfinishedPostIts)]->getId() : 0;
+
         return $this->redirectToRoute('app_post_it_details', [
             'id' => $randomPostIt,
         ]);
@@ -65,6 +72,27 @@ final class PostItController extends AbstractController
     {
         return $this->render('post_it/show.html.twig', [
             'postIt' => $postIt,
+        ]);
+    }
+
+    #[Route('/post_it/new', name: 'app_postit_create', methods: ['GET', 'POST'])]
+    public function createPostIt(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $postIt = new PostIt();
+        $postIt->setOwner($this->getUser());
+        $form = $this->createForm(PostItType::class, $postIt);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($postIt);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_sticky_board');
+        }
+
+        return $this->render('post_it/_form.html.twig', [
+            'form' => $form,
+            'submit_label' => 'Stick it to your sticky notes board',
         ]);
     }
 }
