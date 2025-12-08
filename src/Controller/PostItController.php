@@ -7,11 +7,9 @@ use App\Enum\Status;
 use App\Form\PostItType;
 use App\Repository\PostItRepository;
 use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Exception\ORMException;
-use Doctrine\ORM\OptimisticLockException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -93,6 +91,47 @@ final class PostItController extends AbstractController
         return $this->render('post_it/_form.html.twig', [
             'form' => $form,
             'submit_label' => 'Stick it to your sticky notes board',
+        ]);
+    }
+
+    #[Route('/post_it/{id}/update-status', name: 'app_postit_update_status', requirements: ['id' => '\d+'], methods: ['PATCH'])]
+    public function updateStatus(PostIt $postIt, Request $request, EntityManagerInterface $entityManager): JsonResponse
+    {
+        if ($postIt->getOwner() !== $this->getUser()) {
+            return new JsonResponse(['error' => 'Unauthorized'], Response::HTTP_FORBIDDEN);
+        }
+
+        $data = json_decode($request->getContent(), true);
+
+        if (!isset($data['status'])) {
+            return new JsonResponse(['error' => 'Status is required'], Response::HTTP_BAD_REQUEST);
+        }
+
+        try {
+            $statusEnum = Status::from($data['status']);
+        } catch (\ValueError $e) {
+            return new JsonResponse(['error' => 'Invalid status value'], Response::HTTP_BAD_REQUEST);
+        }
+
+        $postIt->setStatus($statusEnum);
+
+        if (Status::FINISHED === $statusEnum && !$postIt->getFinishDate()) {
+            $postIt->setFinishDate(new \DateTime());
+        }
+
+        if (Status::FINISHED !== $statusEnum && $postIt->getFinishDate()) {
+            $postIt->setFinishDate(null);
+        }
+
+        $entityManager->flush();
+
+        return new JsonResponse([
+            'success' => true,
+            'postIt' => [
+                'id' => $postIt->getId(),
+                'status' => $postIt->getStatus()->value,
+                'finishDate' => $postIt->getFinishDate()?->format('Y-m-d H:i:s'),
+            ],
         ]);
     }
 }
