@@ -25,11 +25,24 @@ final class GameController extends AbstractController
     #[Route('/games', name: 'app_games')]
     public function index(SteamAPI $steamAPI, UserRepository $userRepository): Response
     {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $currentUserSteamID = $userRepository->getUserSteamIDFromUsername($this->getUser()->getUserIdentifier()) ?? 'not_found';
-        $games = $steamAPI->getUserGames($currentUserSteamID);
+        if ('not_found' != $currentUserSteamID) {
+            $games = $steamAPI->getUserGames($currentUserSteamID);
+            $summary = $steamAPI->getUserSummary($currentUserSteamID);
+            $avatar = $summary['avatarmedium'];
+            $username = $summary['personaname'];
+        } else {
+            $games = $avatar = $username = null;
+        }
 
         return $this->render('game/index.html.twig', [
             'games' => $games,
+            'avatar' => $avatar,
+            'username' => $username,
         ]);
     }
 
