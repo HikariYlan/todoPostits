@@ -2,13 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Service\SteamAPI;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
@@ -32,6 +30,18 @@ final class GameController extends AbstractController
 
         return $this->render('game/index.html.twig', [
             'games' => $games,
+        ]);
+    }
+
+    #[Route('/games/random', name: 'app_games_random')]
+    public function randomGame(SteamAPI $steamAPI, UserRepository $userRepository): Response
+    {
+        $currentUserSteamID = $userRepository->getUserSteamIDFromUsername($this->getUser()->getUserIdentifier()) ?? 'not_found';
+        $games = $steamAPI->getUserGames($currentUserSteamID);
+        $randomGame = $games[array_rand($games)];
+
+        return $this->render('game/show.html.twig', [
+            'game' => $randomGame,
         ]);
     }
 }
