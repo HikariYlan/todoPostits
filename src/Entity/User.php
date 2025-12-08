@@ -42,6 +42,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: PostIt::class, mappedBy: 'owner', orphanRemoval: true)]
     private Collection $postits;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $steamID = null;
+
     public function __construct()
     {
         $this->postits = new ArrayCollection();
@@ -154,6 +157,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $postit->setOwner(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSteamID(): ?string
+    {
+        return $this->steamID;
+    }
+
+    public function setSteamID(?string $steamID): static
+    {
+        $this->steamID = $steamID;
 
         return $this;
     }
