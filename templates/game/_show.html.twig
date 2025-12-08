@@ -1,0 +1,6 @@
+<div style="display: flex; margin: 0.5em; gap: 5px">
+    <p>{{ game.name }}</p>
+    <img src={{ getImage(game.appid, game.img_icon_url) }} alt="{{ game.name }}">
+    <!-- Playtime is in minutes, must be converted to "XhX" -->
+    <p>{{ game.playtime_forever }}</p>
+</div>
