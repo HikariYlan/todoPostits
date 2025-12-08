@@ -1,6 +1,50 @@
-<div style="display: flex; margin: 0.5em; gap: 5px">
-    <p>{{ game.name }}</p>
-    <img src={{ getImage(game.appid, game.img_icon_url) }} alt="{{ game.name }}">
-    <!-- Playtime is in minutes, must be converted to "XhX" -->
-    <p>{{ game.playtime_forever }}</p>
+<div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:scale-105 cursor-pointer">
+    <div class="relative">
+        <div class="aspect-w-16 aspect-h-9 bg-gradient-to-br from-purple-100 to-indigo-100 flex items-center justify-center p-4">
+            <img src="{{ getImage(game.appid, game.img_icon_url) }}"
+                 alt="{{ game.name }}"
+                 class="w-16 h-16 object-contain">
+        </div>
+        <div class="absolute top-2 right-2 bg-purple-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+            {% set hours = (game.playtime_forever / 60)|round(0, 'floor') %}
+            {% set minutes = game.playtime_forever % 60 %}
+            {% if hours > 0 %}
+                {{ hours }}h{{ minutes > 0 ? minutes ~ 'm' : '' }}
+            {% else %}
+                {{ minutes }}m
+            {% endif %}
+        </div>
+    </div>
+    <div class="p-4">
+        <h3 class="font-bold text-gray-800 text-sm line-clamp-2 min-h-[2.5rem]">{{ game.name }}</h3>
+        <div class="mt-2 flex items-center text-xs text-gray-500">
+            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            {% if game.rtime_last_played %}
+                Last played
+                {% set now = "now"|date('U') %}
+                {% set daysSince = ((now - game.rtime_last_played) / 86400)|round(0, 'floor') %}
+                {% if daysSince == 0 %}
+                    today
+                {% elseif daysSince == 1 %}
+                    yesterday
+                {% elseif daysSince < 7 %}
+                    {{ daysSince }} days ago
+                {% elseif daysSince < 30 %}
+                    {{ (daysSince / 7)|round(0, 'floor') }} weeks ago
+                {% elseif (daysSince / 30)|round(0, 'floor') == 1%}
+                    1 month ago
+                {% elseif daysSince < 365 %}
+                    {{ (daysSince / 30)|round(0, 'floor') }} months ago
+                {% elseif (daysSince / 365)|round(0, 'floor') == 1%}
+                    1 year ago
+                {% else %}
+                    {{ (daysSince / 365)|round(0, 'floor') }} years ago
+                {% endif %}
+            {% else %}
+                Never played
+            {% endif %}
+        </div>
+    </div>
 </div>
