@@ -54,7 +54,7 @@ If you want to use a fake account, there is always the 2 same accounts when the 
     - Username: hikari
     - Password: user
 
-After a successful authentication, you will be redirected to your "cork board". 
+After a successful authentication, you will be redirected to your "sticky board". 
 From there, you can see all of your Post-its!
 
 ### How to use the "Random game" functionality
