@@ -23,10 +23,27 @@ export default class extends Controller {
         });
     }
 
+    updateEmptyMessage(container) {
+        const emptyMessage = container.querySelector('.empty-message');
+        const hasPostIts = container.querySelectorAll('.postit-item').length > 0;
+
+        if (emptyMessage) {
+            if (hasPostIts) {
+                emptyMessage.classList.add('hidden');
+            } else {
+                emptyMessage.classList.remove('hidden');
+            }
+        }
+    }
+
     async onDragEnd(event) {
         const postItId = event.item.dataset.postItId;
         const newStatus = event.to.dataset.sortableStatusValue;
         const oldStatus = event.from.dataset.sortableStatusValue;
+
+        // Update empty messages for both containers
+        this.updateEmptyMessage(event.from);
+        this.updateEmptyMessage(event.to);
 
         if (oldStatus === newStatus) {
             setTimeout(() => { window.isDragging = false; }, 100);
@@ -63,6 +80,9 @@ export default class extends Controller {
         } catch (error) {
             event.to.removeChild(event.item);
             event.from.insertBefore(event.item, event.from.children[event.oldIndex] || null);
+            // Restore empty messages after rollback
+            this.updateEmptyMessage(event.from);
+            this.updateEmptyMessage(event.to);
             alert('Failed to update status');
         } finally {
             setTimeout(() => { window.isDragging = false; }, 100);

@@ -1,43 +1,40 @@
-{% if postIts is not empty %}
-    {% for postIt in postIts %}
-        <div class="postit-item" data-post-it-id="{{ postIt.id }}">
-            <div class="post-it-card {% if status == 'pending' %}post-it-pending{% elseif status == 'todo' %}post-it-todo{% elseif status == 'ongoing' %}post-it-ongoing{% elseif status == 'finished' %}post-it-finished{% endif %} relative overflow-hidden cursor-pointer"
-                 onclick="if(!window.isDragging) { window.location.href='{{ path('app_post_it_details', {id: postIt.id}) }}'; }">
-                <div class="absolute top-0 right-0 w-0 h-0 border-l-[28px] border-l-transparent border-t-[28px] border-t-white shadow-md"></div>
-                <h4 class="text-lg font-bold text-gray-800 mb-2 pr-6">{{ postIt.title }}</h4>
-                <div class="text-sm text-gray-700 space-y-1">
-                    <p class="flex items-center">
-                        <svg class="w-4 h-4 mr-1 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+{% for postIt in postIts %}
+    <div class="postit-item" data-post-it-id="{{ postIt.id }}">
+        <div class="post-it-card {% if status == 'pending' %}post-it-pending{% elseif status == 'todo' %}post-it-todo{% elseif status == 'ongoing' %}post-it-ongoing{% elseif status == 'finished' %}post-it-finished{% endif %} relative overflow-hidden cursor-pointer"
+             onclick="if(!window.isDragging) { window.location.href='{{ path('app_post_it_details', {id: postIt.id}) }}'; }">
+            <div class="absolute top-0 right-0 w-0 h-0 border-l-[28px] border-l-transparent border-t-[28px] border-t-white shadow-md"></div>
+            <h4 class="text-lg font-bold text-gray-800 mb-2 pr-6">{{ postIt.title }}</h4>
+            <div class="text-sm text-gray-700 space-y-1">
+                <p class="flex items-center">
+                    <svg class="w-4 h-4 mr-1 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Created: {{ postIt.creationDate|date('m/d/Y, h:i A') }}
+                </p>
+                {% if postIt.dueDate %}
+                    <p class="flex items-center text-orange-700 font-semibold">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                         </svg>
-                        Created: {{ postIt.creationDate|date('m/d/Y, h:i A') }}
+                        Due: {{ postIt.dueDate|date('m/d/Y') }}
                     </p>
-                    {% if postIt.dueDate %}
-                        <p class="flex items-center text-orange-700 font-semibold">
-                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                            </svg>
-                            Due: {{ postIt.dueDate|date('m/d/Y') }}
-                        </p>
-                    {% endif %}
-                    {% if postIt.finishDate %}
-                        <p class="flex items-center text-green-700 font-semibold">
-                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            Finished: {{ postIt.finishDate|date('m/d/Y') }}
-                        </p>
-                    {% endif %}
-                </div>
+                {% endif %}
+                {% if postIt.finishDate %}
+                    <p class="flex items-center text-green-700 font-semibold">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Finished: {{ postIt.finishDate|date('m/d/Y') }}
+                    </p>
+                {% endif %}
             </div>
         </div>
-    {% endfor %}
-{% else %}
-    <div class="text-center py-8 text-gray-500">
-        <svg class="w-16 h-16 mx-auto mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
-        </svg>
-        <p class="text-sm">No post-its</p>
     </div>
-{% endif %}
+{% endfor %}
+<div class="empty-message text-center py-8 text-gray-500 {% if postIts is not empty %}hidden{% endif %}">
+    <svg class="w-16 h-16 mx-auto mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
+    </svg>
+    <p class="text-sm">No post-its</p>
+</div>
 
