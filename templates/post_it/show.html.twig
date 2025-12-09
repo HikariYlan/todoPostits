@@ -67,7 +67,7 @@
                                 </svg>
                                 <span class="text-sm font-semibold text-gray-600 uppercase">Created</span>
                             </div>
-                            <p class="text-lg font-medium text-gray-800">{{ postIt.creationDate|date('m/d/Y, h:i A') }}</p>
+                            <p class="text-lg font-medium text-gray-800">{{ postIt.creationDate|date('d/m/Y, H:i') }}</p>
                         </div>
 
                         <div class="bg-orange-50 rounded-lg p-4 border-l-4 border-orange-400">
@@ -77,7 +77,7 @@
                                 </svg>
                                 <span class="text-sm font-semibold text-orange-600 uppercase">Due Date</span>
                             </div>
-                            <p class="text-lg font-medium text-gray-800">{{ postIt.dueDate ? postIt.dueDate|date('m/d/Y') : "No due date" }}</p>
+                            <p class="text-lg font-medium text-gray-800">{{ postIt.dueDate ? postIt.dueDate|date('d/m/Y') : "No due date" }}</p>
                         </div>
 
                         <div class="bg-green-50 rounded-lg p-4 border-l-4 border-green-400">
@@ -87,7 +87,7 @@
                                 </svg>
                                 <span class="text-sm font-semibold text-green-600 uppercase">Finish Date</span>
                             </div>
-                            <p class="text-lg font-medium text-gray-800">{{ postIt.finishDate ? postIt.finishDate|date('m/d/Y') : "Not finished yet" }}</p>
+                            <p class="text-lg font-medium text-gray-800">{{ postIt.finishDate ? postIt.finishDate|date('d/m/Y') : "Not finished yet" }}</p>
                         </div>
 
                         <div class="bg-purple-50 rounded-lg p-4 border-l-4 border-purple-400">

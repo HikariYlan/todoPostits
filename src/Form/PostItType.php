@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\PostIt;
 use App\Enum\Status;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,9 +22,15 @@ class PostItType extends AbstractType
             ->add('description', options: [
                 'label' => 'Description',
             ])
-            ->add('dueDate', DateTimeType::class, [
+            ->add('dueDate', DateType::class, [
                 'required' => false,
                 'label' => 'Due Date',
+                'widget' => 'single_text',
+                'input' => 'datetime',
+                'html5' => true,
+                'attr' => [
+                    'placeholder' => 'dd/mm/yyyy',
+                ],
             ])
             ->add('status', EnumType::class, [
                 'class' => Status::class,
