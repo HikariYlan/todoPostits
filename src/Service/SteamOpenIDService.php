@@ -14,9 +14,6 @@ class SteamOpenIDService
     ) {
     }
 
-    /**
-     * Génère l'URL de redirection vers Steam pour l'authentification OpenID.
-     */
     public function getAuthUrl(): string
     {
         $params = [
@@ -31,11 +28,6 @@ class SteamOpenIDService
         return self::STEAM_OPENID_URL.'?'.http_build_query($params);
     }
 
-    /**
-     * Valide la réponse OpenID de Steam et retourne le SteamID si valide.
-     *
-     * @return string|null Le SteamID 64-bit ou null si la validation échoue
-     */
     public function validate(Request $request): ?string
     {
         // Vérifier que c'est une réponse positive
@@ -43,20 +35,17 @@ class SteamOpenIDService
             return null;
         }
 
-        // Récupérer le claimed_id qui contient le SteamID
         $claimedId = $request->query->get('openid_claimed_id');
         if (!$claimedId) {
             return null;
         }
 
-        // Vérifier que l'URL vient bien de Steam
         if (!preg_match('#^https://steamcommunity\.com/openid/id/(\d+)$#', $claimedId, $matches)) {
             return null;
         }
 
         $steamId = $matches[1];
 
-        // Vérifier la signature auprès de Steam
         if (!$this->verifyWithSteam($request)) {
             return null;
         }
@@ -64,9 +53,6 @@ class SteamOpenIDService
         return $steamId;
     }
 
-    /**
-     * Vérifie la réponse OpenID directement auprès de Steam.
-     */
     private function verifyWithSteam(Request $request): bool
     {
         $params = [
@@ -77,7 +63,6 @@ class SteamOpenIDService
             'openid.mode' => 'check_authentication',
         ];
 
-        // Ajouter tous les champs signés
         $signed = explode(',', $request->query->get('openid_signed', ''));
         foreach ($signed as $item) {
             $paramName = 'openid_'.str_replace('.', '_', $item);
@@ -87,7 +72,6 @@ class SteamOpenIDService
             }
         }
 
-        // Envoyer la requête de vérification à Steam
         $context = stream_context_create([
             'http' => [
                 'method' => 'POST',
@@ -103,7 +87,6 @@ class SteamOpenIDService
             return false;
         }
 
-        // Vérifier que Steam confirme la validité
         return str_contains($response, 'is_valid:true');
     }
 }

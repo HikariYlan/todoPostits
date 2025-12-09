@@ -22,13 +22,6 @@ class SteamAPI
         $this->APIKey = $_ENV['STEAM_API_KEY'];
     }
 
-    /**
-     * @throws TransportExceptionInterface
-     * @throws ServerExceptionInterface
-     * @throws RedirectionExceptionInterface
-     * @throws DecodingExceptionInterface
-     * @throws ClientExceptionInterface
-     */
     public function getUserGames(string $userSteamId): array
     {
         if ('not_found' == $userSteamId) {
