@@ -65,14 +65,6 @@ final class PostItController extends AbstractController
         ]);
     }
 
-    #[Route('/post_it/{id}', name: 'app_post_it_details', requirements: ['id' => '\d+'], methods: 'GET')]
-    public function showDetails(?PostIt $postIt): Response
-    {
-        return $this->render('post_it/show.html.twig', [
-            'postIt' => $postIt,
-        ]);
-    }
-
     #[Route('/post_it/new', name: 'app_postit_create', methods: ['GET', 'POST'])]
     public function createPostIt(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -94,6 +86,28 @@ final class PostItController extends AbstractController
         return $this->render('post_it/_form.html.twig', [
             'form' => $form,
             'submit_label' => 'Stick it to your sticky notes board',
+        ]);
+    }
+
+    #[Route('/post_it/{id}/edit', name: 'app_postit_edit', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
+    public function editPostIt(PostIt $postIt, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(PostItType::class, $postIt);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($postIt);
+            if (Status::FINISHED === $postIt->getStatus()) {
+                $postIt->setFinishDate(new \DateTime());
+            }
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_sticky_board');
+        }
+
+        return $this->render('post_it/_form.html.twig', [
+            'form' => $form,
+            'submit_label' => 'Edit your Post-It',
         ]);
     }
 
@@ -135,6 +149,14 @@ final class PostItController extends AbstractController
                 'status' => $postIt->getStatus()->value,
                 'finishDate' => $postIt->getFinishDate()?->format('Y-m-d H:i:s'),
             ],
+        ]);
+    }
+
+    #[Route('/post_it/{id}', name: 'app_post_it_details', requirements: ['id' => '\d+'], methods: 'GET')]
+    public function showDetails(?PostIt $postIt): Response
+    {
+        return $this->render('post_it/show.html.twig', [
+            'postIt' => $postIt,
         ]);
     }
 }
