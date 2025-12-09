@@ -159,6 +159,19 @@ final class PostItController extends AbstractController
         ]);
     }
 
+        #[Route('/post_it/{id}/delete', name: 'app_post_it_delete', requirements: ['id' => '\d+'], methods: ['POST'])]
+    public function delete(PostIt $postIt, EntityManagerInterface $manager, Request $request): Response
+    {
+        $submittedToken = $request->getPayload()->get('token');
+        if ($this->isCsrfTokenValid('delete-item', $submittedToken)) {
+            $manager->remove($postIt);
+            $manager->flush();
+        }
+
+        return $this->redirectToRoute('app_home');
+    }
+
+
     #[Route('/post_it/{id}', name: 'app_post_it_details', requirements: ['id' => '\d+'], methods: 'GET')]
     public function showDetails(?PostIt $postIt): Response
     {

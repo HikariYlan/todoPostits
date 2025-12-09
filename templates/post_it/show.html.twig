@@ -108,6 +108,7 @@
                             </svg>
                             Edit Post-It
                         </a>
+                        {{ include('post_it/delete.html.twig') }}
                         <a href="{{ path('app_sticky_board') }}" class="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r
                             {% if postIt.status.value == 'PENDING' %}
                                 from-gray-400 to-gray-500 hover:from-gray-500 hover:to-gray-600
