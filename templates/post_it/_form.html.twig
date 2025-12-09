@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}TODOs PostIt! - New PostIt{% endblock %}
+{% block title %}TODOs PostIt! - {{ submit_label }}{% endblock %}
 
 {% block body %}
 <div class="min-h-[80vh] flex items-center justify-center">
     <div class="max-w-2xl w-full">
         <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
-            <div class="bg-gradient-to-r from-yellow-400 to-orange-400 p-6 text-center">
-                <svg class="w-16 h-16 mx-auto mb-2 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="bg-gradient-to-r {% if 'Edit' in submit_label %}from-purple-500 to-indigo-500{% else %}from-yellow-400 to-orange-400{% endif %} p-6 text-center">
+                <svg class="w-16 h-16 mx-auto mb-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                 </svg>
-                <h1 class="text-2xl font-bold text-black">Create a new PostIt</h1>
-                <p class="text-yellow-100 text-sm mt-1">Add a new task to your sticky notes board</p>
+                <h1 class="text-2xl font-bold text-white">{% if 'Edit' in submit_label %}Edit Your Post-It{% else %}Create a New Post-It{% endif %}</h1>
+                <p class="text-white text-opacity-90 text-sm mt-1">{% if 'Edit' in submit_label %}Update your task information{% else %}Add a new task to your sticky notes board{% endif %}</p>
             </div>
 
             <div class="p-8">
@@ -105,9 +105,13 @@
                     {{ form_errors(form.status) }}
                 </div>
 
-                <button type="submit" class="w-full bg-gradient-to-r from-yellow-400 to-orange-400 text-black font-bold py-3 rounded-lg shadow-lg hover:from-yellow-500 hover:to-orange-500 transition-all duration-200 transform hover:scale-105 flex items-center justify-center">
+                <button type="submit" class="w-full bg-gradient-to-r {% if 'Edit' in submit_label %}from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600{% else %}from-yellow-400 to-orange-400 hover:from-yellow-500 hover:to-orange-500{% endif %} text-white font-bold py-3 rounded-lg shadow-lg transition-all duration-200 transform hover:scale-105 flex items-center justify-center">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        {% if 'Edit' in submit_label %}
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        {% else %}
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        {% endif %}
                     </svg>
                     {{ submit_label }}
                 </button>
@@ -116,7 +120,7 @@
 
                 <div class="text-center pt-6 border-t border-gray-200">
                     <p class="text-gray-600">
-                        <a href="{{ path('app_sticky_board') }}" class="text-yellow-600 font-semibold hover:text-yellow-700 transition-colors">
+                        <a href="{{ path('app_sticky_board') }}" class="{% if 'Edit' in submit_label %}text-purple-600 hover:text-purple-700{% else %}text-yellow-600 hover:text-yellow-700{% endif %} font-semibold transition-colors">
                             ← Back to sticky notes board
                         </a>
                     </p>
