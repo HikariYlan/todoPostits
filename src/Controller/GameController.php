@@ -60,9 +60,26 @@ final class GameController extends AbstractController
     }
 
     #[Route('/games/random', name: 'app_games_random')]
-    public function randomGame(SteamAPI $steamAPI, UserRepository $userRepository): Response
+    public function randomGame(SteamAPI $steamAPI, UserRepository $userRepository, PostItRepository $postItRepository): Response
     {
-        $currentUserSteamID = $userRepository->getUserSteamIDFromUsername($this->getUser()->getUserIdentifier()) ?? 'not_found';
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur a terminé une tâche aujourd'hui
+        $tasks_finished = $postItRepository->getFinishedPostitsFromUser($user->getId());
+        $finished = false;
+        foreach ($tasks_finished as $postIt) {
+            if ($postIt->getFinishDate()->format('Y-m-d') == (new \DateTime('now'))->format('Y-m-d')) {
+                $finished = true;
+                break;
+            }
+        }
+
+        if (!$finished) {
+            $this->addFlash('warning', 'You must complete a task today to pick a random game!');
+            return $this->redirectToRoute('app_sticky_board');
+        }
+
+        $currentUserSteamID = $userRepository->getUserSteamIDFromUsername($user->getUserIdentifier()) ?? 'not_found';
         $games = $steamAPI->getUserGames($currentUserSteamID);
         $randomGame = $games[array_rand($games)];
 
