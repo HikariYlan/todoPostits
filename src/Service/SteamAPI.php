@@ -35,7 +35,7 @@ class SteamAPI
             return [];
         }
 
-        return $this->client->request('GET', self::BASE_URL.'/IPlayerService/GetOwnedGames/v0001/', [
+        $response = $this->client->request('GET', self::BASE_URL.'/IPlayerService/GetOwnedGames/v0001/', [
             'query' => [
                 'key' => $this->APIKey,
                 'steamid' => $userSteamId,
@@ -43,7 +43,9 @@ class SteamAPI
                 'include_appinfo' => 'true',
                 'include_played_free_games' => 'true',
             ],
-        ])->toArray()['response']['games'];
+        ])->toArray()['response'];
+
+        return $response['games'] ?? [];
     }
 
     /**
