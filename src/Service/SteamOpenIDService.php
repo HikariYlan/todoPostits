@@ -30,7 +30,6 @@ class SteamOpenIDService
 
     public function validate(Request $request): ?string
     {
-        // Vérifier que c'est une réponse positive
         if ('id_res' !== $request->query->get('openid_mode')) {
             return null;
         }
