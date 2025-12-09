@@ -159,7 +159,21 @@ final class PostItController extends AbstractController
         ]);
     }
 
-        #[Route('/post_it/{id}/delete', name: 'app_post_it_delete', requirements: ['id' => '\d+'], methods: ['POST'])]
+    #[Route('/post_it/{id}/finish', name: 'app_post_it_finish', requirements: ['id' => '\d+'], methods: ['POST'])]
+    public function finish(PostIt $postIt, EntityManagerInterface $manager, Request $request): Response
+    {
+        $submittedToken = $request->getPayload()->get('token');
+        if ($this->isCsrfTokenValid('finish-postIt', $submittedToken)) {
+            $postIt->setStatus(Status::FINISHED);
+            $postIt->setFinishDate(new \DateTime());
+            $manager->persist($postIt);
+            $manager->flush();
+        }
+
+        return $this->redirectToRoute('app_sticky_board');
+    }
+
+    #[Route('/post_it/{id}/delete', name: 'app_post_it_delete', requirements: ['id' => '\d+'], methods: ['POST'])]
     public function delete(PostIt $postIt, EntityManagerInterface $manager, Request $request): Response
     {
         $submittedToken = $request->getPayload()->get('token');
@@ -170,7 +184,6 @@ final class PostItController extends AbstractController
 
         return $this->redirectToRoute('app_home');
     }
-
 
     #[Route('/post_it/{id}', name: 'app_post_it_details', requirements: ['id' => '\d+'], methods: 'GET')]
     public function showDetails(?PostIt $postIt): Response
