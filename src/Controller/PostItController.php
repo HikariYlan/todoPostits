@@ -92,6 +92,13 @@ final class PostItController extends AbstractController
     #[Route('/post_it/{id}/edit', name: 'app_postit_edit', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function editPostIt(PostIt $postIt, Request $request, EntityManagerInterface $entityManager): Response
     {
+        $isAdmin = in_array('ROLE_ADMIN', $this->getUser()->getRoles());
+        $isOwner = $postIt->getOwner() === $this->getUser();
+
+        if (!$isAdmin && !$isOwner) {
+            return $this->redirectToRoute('app_sticky_board');
+        }
+
         $form = $this->createForm(PostItType::class, $postIt);
         $form->handleRequest($request);
 
@@ -155,6 +162,13 @@ final class PostItController extends AbstractController
     #[Route('/post_it/{id}', name: 'app_post_it_details', requirements: ['id' => '\d+'], methods: 'GET')]
     public function showDetails(?PostIt $postIt): Response
     {
+        $isAdmin = in_array('ROLE_ADMIN', $this->getUser()->getRoles());
+        $isOwner = $postIt->getOwner() === $this->getUser();
+
+        if (!$isAdmin && !$isOwner) {
+            return $this->redirectToRoute('app_sticky_board');
+        }
+
         return $this->render('post_it/show.html.twig', [
             'postIt' => $postIt,
         ]);
