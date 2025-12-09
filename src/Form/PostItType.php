@@ -21,6 +21,7 @@ class PostItType extends AbstractType
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
+                'required' => false,
             ])
             ->add('dueDate', DateType::class, [
                 'required' => false,
