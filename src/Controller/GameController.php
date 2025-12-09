@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\PostItRepository;
 use App\Repository\UserRepository;
 use App\Service\SteamAPI;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,13 +24,15 @@ final class GameController extends AbstractController
      * @throws ClientExceptionInterface
      */
     #[Route('/games', name: 'app_games')]
-    public function index(SteamAPI $steamAPI, UserRepository $userRepository): Response
+    public function index(SteamAPI $steamAPI, UserRepository $userRepository, PostItRepository $postItRepository): Response
     {
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
         }
 
-        $currentUserSteamID = $userRepository->getUserSteamIDFromUsername($this->getUser()->getUserIdentifier()) ?? 'not_found';
+        $user = $this->getUser();
+
+        $currentUserSteamID = $userRepository->getUserSteamIDFromUsername($user->getUserIdentifier()) ?? 'not_found';
         if ('not_found' != $currentUserSteamID) {
             $games = $steamAPI->getUserGames($currentUserSteamID);
             $summary = $steamAPI->getUserSummary($currentUserSteamID);
@@ -39,10 +42,20 @@ final class GameController extends AbstractController
             $games = $avatar = $username = null;
         }
 
+        $tasks_finished = $postItRepository->getFinishedPostitsFromUser($user->getId());
+        $finished = false;
+        foreach ($tasks_finished as $postIt) {
+            if ($postIt->getFinishDate()->format('Y-m-d') == (new \DateTime('now'))->format('Y-m-d')) {
+                $finished = true;
+                break;
+            }
+        }
+
         return $this->render('game/index.html.twig', [
             'games' => $games,
             'avatar' => $avatar,
             'username' => $username,
+            'task_finished' => $finished,
         ]);
     }
 
