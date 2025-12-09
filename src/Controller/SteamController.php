@@ -40,16 +40,12 @@ class SteamController extends AbstractController
         $steamId = $openId->validate($request);
 
         if (null === $steamId) {
-            $this->addFlash('error', 'L\'authentification Steam a échoué. Veuillez réessayer.');
-
             return $this->redirectToRoute('app_sticky_board');
         }
 
         $user = $this->getUser();
         $user->setSteamID($steamId);
         $entityManager->flush();
-
-        $this->addFlash('success', 'Votre compte Steam a été lié avec succès ! SteamID: '.$steamId);
 
         return $this->redirectToRoute('app_games');
     }
@@ -62,8 +58,6 @@ class SteamController extends AbstractController
         $user = $this->getUser();
         $user->setSteamID(null);
         $entityManager->flush();
-
-        $this->addFlash('success', 'Votre compte Steam a été délié.');
 
         return $this->redirectToRoute('app_games');
     }
