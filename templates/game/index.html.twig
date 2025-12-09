@@ -96,21 +96,16 @@
                         <span class="font-bold text-3xl">{{ games|length }}</span> games
                     </p>
                 </div>
-                {% if task_finished %}
-                    <a href="{{ path('app_games_random') }}" class="inline-flex items-center px-8 py-4 bg-white text-purple-600 font-bold rounded-lg shadow-lg hover:bg-gray-100 transition-all duration-200 transform hover:scale-105">
-                        <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <a href="{{ path(task_finished ? 'app_games_random' : 'app_post_it_random') }}" class="inline-flex items-center px-8 py-4 bg-white text-purple-600 font-bold rounded-lg shadow-lg hover:bg-gray-100 transition-all duration-200 transform hover:scale-105">
+                    <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        {% if task_finished %}
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                        Pick a random game!
-                    </a>
-                {% else %}
-                    <span class="inline-flex items-center px-8 py-4 bg-gray-300 text-gray-500 font-bold rounded-lg shadow-lg cursor-not-allowed opacity-60">
-                        <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                        </svg>
-                        Pick a random game!
-                    </span>
-                {% endif %}
+                        {% else %}
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                        {% endif %}
+                    </svg>
+                    {{ task_finished ? 'Pick a random game!' : 'Pick a random task!' }}
+                </a>
             </div>
         </div>
     </div>
