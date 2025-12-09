@@ -8,20 +8,48 @@
     <p class="text-gray-600">Pick a random game from your Steam library</p>
 </div>
 
-{% if games is empty %}
+{% if not app.user.steamID %}
     <div class="max-w-2xl mx-auto">
         <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
             <div class="p-8 text-center">
                 <svg class="w-24 h-24 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
-                <h2 class="text-3xl font-bold text-gray-800 mb-2">No Games Found</h2>
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">No Account Found</h2>
                 <p class="text-gray-600 text-lg mb-6">
-                    No SteamID linked to your account. Connect your Steam account to see your games!
+                    No Steam account linked. Connect your Steam account to see your games!
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
                     <a href="{{ path('app_steam_auth') }}" class="transition-all duration-200 transform hover:scale-105">
                         <img src="{{ asset('images/steam_button.png') }}" alt="Sign in through Steam" class="h-10">
+                    </a>
+                    <a href="{{ path('app_sticky_board') }}" class="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-purple-500 to-indigo-500 text-white font-semibold rounded-lg shadow-lg hover:from-purple-600 hover:to-indigo-600 transition-all duration-200 transform hover:scale-105">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                        </svg>
+                        Back to sticky notes board
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% elseif games is empty %}
+    <div class="max-w-2xl mx-auto">
+        <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
+            <div class="p-8 text-center">
+                <svg class="w-24 h-24 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">No Games Found</h2>
+                <p class="text-gray-600 text-lg mb-6">
+                    Your Steam account is linked but no games were found. Your game library might be private or empty.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <a href="{{ path('app_steam_unlink') }}" class="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold rounded-lg shadow-lg hover:from-red-600 hover:to-red-700 transition-all duration-200 transform hover:scale-105" onclick="return confirm('Are you sure you want to unlink your Steam account?')">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                        </svg>
+                        Unlink Steam Account
                     </a>
                     <a href="{{ path('app_sticky_board') }}" class="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-purple-500 to-indigo-500 text-white font-semibold rounded-lg shadow-lg hover:from-purple-600 hover:to-indigo-600 transition-all duration-200 transform hover:scale-105">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
