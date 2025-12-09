@@ -68,7 +68,7 @@
         <footer class="bg-gray-800 text-white py-6 mt-auto">
             <div class="container mx-auto text-center">
                 <p class="text-sm">
-                    ©2025-{{ "now"|date("Y") }}
+                    ©2025{{ "now"|date("Y") != "2025" ? ['-', "now"|date("Y")]|join() : ""}}
                     <a
                         href="https://github.com/HikariYlan"
                         class="text-orange-400 hover:text-orange-300 transition-colors duration-200"
