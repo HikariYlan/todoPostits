@@ -35,28 +35,13 @@ class PostItRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    //    /**
-    //     * @return PostIt[] Returns an array of PostIt objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('p.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?PostIt
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function getFinishedPostitsFromUser(mixed $userId): mixed
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.owner = :userId')
+            ->andWhere('LOWER(p.status) LIKE \'finished\'')
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getResult();
+    }
 }
