@@ -1,13 +1,13 @@
 <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
     <div class="relative">
-        <div class="aspect-w-16 aspect-h-9 bg-gradient-to-br from-purple-100 to-indigo-100 flex items-center justify-center p-6">
+        <div class="aspect-w-16 aspect-h-9 bg-gradient-to-br from-cyan-100 to-teal-100 flex items-center justify-center p-6">
             <div class="relative bg-white rounded-xl p-3 shadow-xl">
                 <img src="{{ getImage(game.appid, game.img_icon_url) }}"
                      alt="{{ game.name }}"
                      class="w-16 h-16 object-contain">
             </div>
         </div>
-        <div class="absolute top-2 right-2 bg-purple-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+        <div class="absolute top-2 right-2 bg-cyan-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
             {% set hours = (game.playtime_forever / 60)|round(0, 'floor') %}
             {% set minutes = game.playtime_forever % 60 %}
             {% if hours > 0 %}
