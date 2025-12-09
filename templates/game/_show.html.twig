@@ -1,4 +1,7 @@
-<div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
+<div class="bg-white rounded-xl shadow-lg overflow-hidden {{ task_finished ? 'hover:shadow-2xl transition-all duration-300 transform hover:scale-105' : '' }}">
+    {% if task_finished %}
+        <a href='steam://run/{{ game.appid }}' class='cursor-pointer'>
+    {% endif %}
     <div class="relative">
         <div class="aspect-w-16 aspect-h-9 bg-gradient-to-br from-cyan-100 to-teal-100 flex items-center justify-center p-6">
             <div class="relative bg-white rounded-xl p-3 shadow-xl">
@@ -49,4 +52,7 @@
             {% endif %}
         </div>
     </div>
+    {% if task_finished %}
+        </a>
+    {% endif %}
 </div>

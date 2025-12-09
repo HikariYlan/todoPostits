@@ -109,9 +109,15 @@
         </div>
     </div>
 
+    {% if task_finished %}
+    <div class="mb-8 text-center">
+        <h1 class="text-2xl font-bold text-gray-800 mb-2">Want to play a particular game?</h1>
+        <p class="text-gray-600">You can click on any card below to directly launch the game!</p>
+    </div>
+    {% endif %}
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {% for game in games|sort((a, b) => a.playtime_forever < b.playtime_forever) %}
-            {{ include('game/_show.html.twig', {game: game}) }}
+            {{ include('game/_show.html.twig', {game: game, task_finished: task_finished}) }}
         {% endfor %}
     </div>
 {% endif %}
