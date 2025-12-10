@@ -19,6 +19,7 @@ final class GameController extends AbstractController
         }
 
         $user = $this->getUser();
+        $requiredTasks = $user->getRequiredTasks();
 
         $currentUserSteamID = $userRepository->getUserSteamIDFromUsername($user->getUserIdentifier()) ?? 'not_found';
         if ('not_found' != $currentUserSteamID) {
@@ -31,19 +32,13 @@ final class GameController extends AbstractController
         }
 
         $tasks_finished = $postItRepository->getFinishedPostitsFromUser($user->getId());
-        $finished = false;
-        foreach ($tasks_finished as $postIt) {
-            if ($postIt->getFinishDate()->format('Y-m-d') == (new \DateTime('now'))->format('Y-m-d')) {
-                $finished = true;
-                break;
-            }
-        }
 
         return $this->render('game/index.html.twig', [
             'games' => $games,
             'avatar' => $avatar,
             'username' => $username,
-            'task_finished' => $finished,
+            'task_finished' => $tasks_finished,
+            'tasks_required' => $requiredTasks,
         ]);
     }
 
