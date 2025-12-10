@@ -1,5 +1,5 @@
-<div class="bg-white rounded-xl shadow-lg overflow-hidden {{ task_finished ? 'hover:shadow-2xl transition-all duration-300 transform hover:scale-105' : '' }}">
-    {% if task_finished %}
+<div class="bg-white rounded-xl shadow-lg overflow-hidden {{ task_finished|length >= tasks_required ? 'hover:shadow-2xl transition-all duration-300 transform hover:scale-105' : '' }}">
+    {% if task_finished|length >= tasks_required %}
         <a href='steam://run/{{ game.appid }}' class='cursor-pointer'>
     {% endif %}
     <div class="relative">
@@ -52,7 +52,7 @@
             {% endif %}
         </div>
     </div>
-    {% if task_finished %}
+    {% if task_finished|length >= tasks_required %}
         </a>
     {% endif %}
 </div>
