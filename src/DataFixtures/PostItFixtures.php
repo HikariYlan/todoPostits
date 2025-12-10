@@ -23,17 +23,6 @@ class PostItFixtures extends Fixture implements DependentFixtureInterface
                 'dueDate' => $dueDate ?? null,
             ];
         });
-
-        PostItFactory::createMany(10, function () {
-            if (1 == random_int(0, 1)) {
-                $dueDate = new \DateTime('+20 days');
-            }
-
-            return [
-                'owner' => UserFactory::findBy(['username' => 'ylan'])[0],
-                'dueDate' => $dueDate ?? null,
-            ];
-        });
     }
 
     public function getDependencies(): array
