@@ -58,7 +58,11 @@ final class PostItController extends AbstractController
                 $this->getUser()->getUserIdentifier()
             )
         );
-        $randomPostIt = $unfinishedPostIts ? $unfinishedPostIts[array_rand($unfinishedPostIts)]->getId() : 0;
+        if (!$unfinishedPostIts) {
+            return $this->redirectToRoute('app_sticky_board');
+        }
+
+        $randomPostIt = $unfinishedPostIts[array_rand($unfinishedPostIts)]->getId();
 
         return $this->redirectToRoute('app_post_it_details', [
             'id' => $randomPostIt,
@@ -188,6 +192,12 @@ final class PostItController extends AbstractController
     #[Route('/post_it/{id}', name: 'app_post_it_details', requirements: ['id' => '\d+'], methods: 'GET')]
     public function showDetails(?PostIt $postIt): Response
     {
+        if (!$postIt) {
+            return $this->render('post_it/show.html.twig', [
+                'postIt' => null,
+            ]);
+        }
+
         $isAdmin = in_array('ROLE_ADMIN', $this->getUser()->getRoles());
         $isOwner = $postIt->getOwner() === $this->getUser();
 
