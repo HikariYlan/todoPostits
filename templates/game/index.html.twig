@@ -4,7 +4,7 @@
 
 {% block body %}
 <div class="mb-8 text-center">
-    <h1 class="text-4xl font-bold text-gray-800 mb-2">🎮 My Game Library</h1>
+    <h1 class="text-4xl font-bold text-gray-800 mb-2"><i class="fa-solid fa-gamepad"></i> My Game Library</h1>
     <p class="text-gray-600">Pick a random game from your Steam library</p>
 </div>
 
@@ -23,7 +23,7 @@
                     <a href="{{ path('app_steam_auth') }}" class="transition-all duration-200 transform hover:scale-105">
                         <img src="{{ asset('images/steam_button.png') }}" alt="Sign in through Steam" class="h-10">
                     </a>
-                    <a href="{{ path('app_sticky_board') }}" class="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-cyan-500 to-teal-500 text-white font-semibold rounded-lg shadow-lg hover:from-cyan-600 hover:to-teal-600 transition-all duration-200 transform hover:scale-105">
+                    <a href="{{ path('app_sticky_board') }}" class="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-teal-500 to-cyan-500 text-white font-semibold rounded-lg shadow-lg hover:from-cyan-600 hover:to-teal-600 transition-all duration-200 transform hover:scale-105">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                         </svg>
@@ -51,7 +51,7 @@
                         </svg>
                         Unlink Steam Account
                     </a>
-                    <a href="{{ path('app_sticky_board') }}" class="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-cyan-500 to-teal-500 text-white font-semibold rounded-lg shadow-lg hover:from-cyan-600 hover:to-teal-600 transition-all duration-200 transform hover:scale-105">
+                    <a href="{{ path('app_sticky_board') }}" class="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-teal-500 to-cyan-500 text-white font-semibold rounded-lg shadow-lg hover:from-cyan-600 hover:to-teal-600 transition-all duration-200 transform hover:scale-105">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                         </svg>
@@ -72,13 +72,14 @@
                     <div>
                         <p class="text-amber-800 font-semibold">{{ task_finished|length }}/{{ tasks_required}} tasks finished today!</p>
                         <p class="text-amber-700 text-sm">Complete {{ tasks_required-task_finished|length }} task(s) to unlock the random game picker.</p>
+                        <p class="text-amber-600 text-sm underline"><a href="{{ path('app_user_settings') }}">Change how many tasks you need to finish here</a></p>
                     </div>
                 </div>
             </div>
         </div>
     {% endif %}
     <div class="max-w-6xl mx-auto mb-8">
-        <div class="bg-gradient-to-r from-cyan-500 to-teal-500 rounded-2xl shadow-xl p-6">
+        <div class="bg-gradient-to-r from-teal-500 to-cyan-500 rounded-2xl shadow-xl p-6">
             <div class="flex items-center justify-between flex-wrap gap-4">
                 <div class="flex items-center space-x-4">
                     <img src="{{ avatar }}" alt="Steam Avatar" class="w-16 h-16 rounded-full shadow-md border-2 border-white">
