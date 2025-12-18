@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class UserController extends AbstractController
 {
-    #[Route('/settings', name: 'app_user')]
+    #[Route('/settings', name: 'app_user_settings')]
     public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
