@@ -3,7 +3,7 @@
         <a href='steam://run/{{ game.appid }}' class='cursor-pointer'>
     {% endif %}
     <div class="relative">
-        <div class="aspect-w-16 aspect-h-9 bg-gradient-to-br from-cyan-100 to-teal-100 flex items-center justify-center p-6">
+        <div class="aspect-w-16 aspect-h-9 bg-gradient-to-br from-teal-100 to-cyan-200 flex items-center justify-center p-6">
             <div class="relative bg-white rounded-xl p-3 shadow-xl">
                 <img src="{{ getImage(game.appid, game.img_icon_url) }}"
                      alt="{{ game.name }}"
@@ -20,7 +20,7 @@
             {% endif %}
         </div>
     </div>
-    <div class="p-4">
+    <div class="p-4 bg-stone-100">
         <h3 class="font-bold text-gray-800 text-sm line-clamp-2 min-h-[2.5rem]">{{ game.name }}</h3>
         <div class="mt-2 flex items-center text-xs text-gray-500">
             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
