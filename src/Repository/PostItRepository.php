@@ -40,7 +40,9 @@ class PostItRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->where('p.owner = :userId')
             ->andWhere('LOWER(p.status) LIKE \'finished\'')
+            ->andWhere('p.finishDate = :today')
             ->setParameter('userId', $userId)
+            ->setParameter('today', new \DateTime('now'))
             ->getQuery()
             ->getResult();
     }
