@@ -73,7 +73,7 @@ In this file, type `STEAM_API_KEY=<insert your key here>`. And voilà! You can u
 The first time you log in, you'll be asked to log in with your Steam account in order to get your Steam ID.
 This process is made with OpenID, and the only thing this application stores is your SteamID.
 **Never in the process your username nor your password are stored.**
-The only thing your SteamID is used for is to get all of your owned games, your profile picture and your username (**which is still not stored, juste displayed!!**).
+The only thing your SteamID is used for is to get all of your owned games, your profile picture and your username (**which is still not stored, just displayed!!**).
 
 **This functionality is clearly made to be optional.**
 If you don't want to use it, it's okay!
