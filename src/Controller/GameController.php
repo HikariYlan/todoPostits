@@ -45,8 +45,9 @@ final class GameController extends AbstractController
     }
 
     #[Route('/games/random', name: 'app_games_random')]
-    public function randomGame(SteamAPI $steamAPI, UserRepository $userRepository, PostItRepository $postItRepository): Response
+    public function randomGame(SteamAPI $steamAPI, PostItRepository $postItRepository): Response
     {
+        /** @var User $user */
         $user = $this->getUser();
 
         $tasks_finished = $postItRepository->getFinishedPostitsFromUser($user->getId());
@@ -62,7 +63,7 @@ final class GameController extends AbstractController
             return $this->redirectToRoute('app_post_it_random');
         }
 
-        $currentUserSteamID = $userRepository->getUserSteamIDFromUsername($user->getUserIdentifier()) ?? 'not_found';
+        $currentUserSteamID = $user->getSteamID() ?? 'not_found';
         $games = $steamAPI->getUserGames($currentUserSteamID);
         $randomGame = $games[array_rand($games)];
 

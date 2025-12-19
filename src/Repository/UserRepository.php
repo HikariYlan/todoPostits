@@ -19,16 +19,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         parent::__construct($registry, User::class);
     }
 
-    public function getIdFromCurrentUser(string $userName): mixed
-    {
-        return $this->createQueryBuilder('u')
-            ->select('u.id')
-            ->where('LOWER(u.username) LIKE LOWER(:username)')
-            ->setParameter('username', $userName)
-            ->getQuery()
-            ->getResult();
-    }
-
     /**
      * Used to upgrade (rehash) the user's password automatically over time.
      */
@@ -41,15 +31,5 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $user->setPassword($newHashedPassword);
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
-    }
-
-    public function getUserSteamIDFromUsername(string $username)
-    {
-        return $this->createQueryBuilder('u')
-            ->select('u.steamID')
-            ->where('u.username = :username')
-            ->setParameter('username', $username)
-            ->getQuery()
-            ->getResult()[0]['steamID'];
     }
 }

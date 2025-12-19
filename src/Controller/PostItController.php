@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\PostIt;
+use App\Entity\User;
 use App\Enum\Status;
 use App\Form\PostItType;
 use App\Repository\PostItRepository;
@@ -20,11 +21,12 @@ final class PostItController extends AbstractController
     public function index(PostItRepository $postItRepository, UserRepository $userRepository): Response
     {
         if ($this->getUser()) {
+            /** @var User $user */
             $user = $this->getUser();
         } else {
             return $this->redirectToRoute('app_login');
         }
-        $userId = $userRepository->getIdFromCurrentUser($user->getUserIdentifier());
+        $userId = $user->getId();
         $postIts = $postItRepository->getPostitsFromUser($userId);
         $pending = $toDo = $onGoing = $finished = [];
         foreach ($postIts as $postIt) {
@@ -53,11 +55,9 @@ final class PostItController extends AbstractController
     #[Route('/post_it/random', name: 'app_post_it_random', methods: 'GET')]
     public function randomPostIt(PostItRepository $postItRepository, UserRepository $userRepository): Response
     {
-        $unfinishedPostIts = $postItRepository->getUnfinishedPostitsFromUser(
-            $userRepository->getIdFromCurrentUser(
-                $this->getUser()->getUserIdentifier()
-            )
-        );
+        /** @var User $user */
+        $user = $this->getUser();
+        $unfinishedPostIts = $postItRepository->getUnfinishedPostitsFromUser($user->getId());
         if (!$unfinishedPostIts) {
             return $this->redirectToRoute('app_sticky_board');
         }
