@@ -37,12 +37,15 @@ class PostItRepository extends ServiceEntityRepository
 
     public function getFinishedPostitsFromUser(mixed $userId): mixed
     {
+        $from = (new \DateTime())->setTime(0, 0, 0);
+        $to = (new \DateTime())->setTime(23, 59, 59);
         return $this->createQueryBuilder('p')
             ->where('p.owner = :userId')
             ->andWhere('LOWER(p.status) LIKE \'finished\'')
-            ->andWhere('p.finishDate = :today')
+            ->andWhere('p.finishDate BETWEEN :from AND :to')
             ->setParameter('userId', $userId)
-            ->setParameter('today', new \DateTime('now'))
+            ->setParameter('from', $from)
+            ->setParameter('to', $to)
             ->getQuery()
             ->getResult();
     }
