@@ -20,7 +20,15 @@
                 <div class="flex justify-between items-center h-16">
                     <div class="flex items-center space-x-8">
                         <a href="{{ path('app_user_settings') }}" class="text-white hover:text-yellow-200 transition-colors duration-200 font-semibold text-lg flex items-center">
-                            <i class="fa-solid fa-user me-1"></i> {{ app.user.username }}
+                            {% if app.user.avatar %}
+                                <img
+                                    src="{{ path('app_user_avatar', {id: app.user.id}) }}?v={{ 'now'|date('U') }}"
+                                    alt="{{ app.user.username }}"
+                                    class="w-10 h-10 rounded-full border-2 border-white me-1">
+                            {% else %}
+                                <i class="fa-solid fa-user me-1"></i>
+                            {% endif %}
+                            {{ app.user.username }}
                         </a>
                         <a href="{{ path('app_sticky_board') }}" class="text-white hover:text-yellow-200 transition-colors duration-200 flex items-center">
                             <i class="fa-regular fa-house me-1"></i> Sticky Notes Board
