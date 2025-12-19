@@ -16,16 +16,12 @@ class PostItType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title', options: [
-                'label' => 'Title',
-            ])
+            ->add('title')
             ->add('description', TextareaType::class, [
-                'label' => 'Description',
                 'required' => false,
             ])
             ->add('dueDate', DateType::class, [
                 'required' => false,
-                'label' => 'Due Date',
                 'widget' => 'single_text',
                 'input' => 'datetime',
                 'html5' => true,
@@ -35,7 +31,6 @@ class PostItType extends AbstractType
             ])
             ->add('status', EnumType::class, [
                 'class' => Status::class,
-                'label' => 'Status',
                 'choice_label' => fn (Status $status) => str_replace('_', ' ', $status->value),
                 'choices' => [
                     'PENDING' => Status::PENDING,
