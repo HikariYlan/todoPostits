@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserSettingsType;
+use App\Service\SteamAPI;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -46,7 +47,7 @@ final class UserController extends AbstractController
     public function avatar(User $user): Response
     {
         if (!$user->getAvatar()) {
-            throw $this->createNotFoundException('No avatar found for this user.');
+            return new Response();
         }
 
         $avatarData = $user->getAvatar();
@@ -64,5 +65,21 @@ final class UserController extends AbstractController
         $response->headers->set('Cache-Control', 'public, max-age=86400');
 
         return $response;
+    }
+
+    #[Route('/user/{id}/steam_avatar', name: 'app_user_steam_avatar')]
+    public function steamAvatar(User $user, SteamAPI $steamAPI): Response
+    {
+        if (!$user->getSteamID()) {
+            throw $this->createNotFoundException('User has no Steam ID');
+        }
+
+        $steamData = $steamAPI->getUserSummary($user->getSteamID());
+        $avatarUrl = $steamData['avatarmedium'] ?? null;
+        if (!$avatarUrl) {
+            return new Response();
+        }
+        return $this->redirect($avatarUrl);
+
     }
 }
