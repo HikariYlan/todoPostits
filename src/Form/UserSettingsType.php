@@ -21,7 +21,7 @@ class UserSettingsType extends AbstractType
                 'mapped' => false,
                 'constraints' => [
                     new File([
-                        'maxSize' => '1024k',
+                        'maxSize' => '1024m',
                         'mimeTypes' => [
                             'image/jpeg',
                             'image/png',
