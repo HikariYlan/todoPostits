@@ -29,18 +29,21 @@ final class PostItController extends AbstractController
         $userId = $user->getId();
         $postIts = $postItRepository->getPostitsFromUser($userId);
         $pending = $toDo = $onGoing = $finished = [];
+        /** @var PostIt $postIt */
         foreach ($postIts as $postIt) {
-            if (Status::PENDING == $postIt->getStatus()) {
-                $pending[] = $postIt;
-            }
-            if (Status::TO_DO == $postIt->getStatus()) {
-                $toDo[] = $postIt;
-            }
-            if (Status::ON_GOING == $postIt->getStatus()) {
-                $onGoing[] = $postIt;
-            }
-            if (Status::FINISHED == $postIt->getStatus()) {
-                $finished[] = $postIt;
+            switch ($postIt->getStatus()) {
+                case Status::PENDING:
+                    $pending[] = $postIt;
+                    break;
+                case Status::TO_DO:
+                    $toDo[] = $postIt;
+                    break;
+                case Status::ON_GOING:
+                    $onGoing[] = $postIt;
+                    break;
+                case Status::FINISHED:
+                    $finished[] = $postIt;
+                    break;
             }
         }
 
