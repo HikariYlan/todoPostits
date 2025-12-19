@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Repository\PostItRepository;
 use App\Repository\UserRepository;
 use App\Service\SteamAPI;
@@ -18,10 +19,11 @@ final class GameController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
+        /** @var User $user */
         $user = $this->getUser();
         $requiredTasks = $user->getRequiredTasks();
 
-        $currentUserSteamID = $userRepository->getUserSteamIDFromUsername($user->getUserIdentifier()) ?? 'not_found';
+        $currentUserSteamID = $user->getSteamID() ?? 'not_found';
         if ('not_found' != $currentUserSteamID) {
             $games = $steamAPI->getUserGames($currentUserSteamID);
             $summary = $steamAPI->getUserSummary($currentUserSteamID);
