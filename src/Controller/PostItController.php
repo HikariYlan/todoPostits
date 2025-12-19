@@ -7,27 +7,26 @@ use App\Entity\User;
 use App\Enum\Status;
 use App\Form\PostItType;
 use App\Repository\PostItRepository;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class PostItController extends AbstractController
 {
     #[Route('/sticky_board', name: 'app_sticky_board')]
-    public function index(PostItRepository $postItRepository, UserRepository $userRepository): Response
+    public function index(PostItRepository $postItRepository): Response
     {
-        if ($this->getUser()) {
-            /** @var User $user */
-            $user = $this->getUser();
-        } else {
+        if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
         }
-        $userId = $user->getId();
-        $postIts = $postItRepository->getPostitsFromUser($userId);
+
+        /** @var User $user */
+        $user = $this->getUser();
+        $postIts = $postItRepository->getPostitsFromUser($user->getId());
         $pending = $toDo = $onGoing = $finished = [];
         /** @var PostIt $postIt */
         foreach ($postIts as $postIt) {
@@ -56,7 +55,7 @@ final class PostItController extends AbstractController
     }
 
     #[Route('/post_it/random', name: 'app_post_it_random', methods: 'GET')]
-    public function randomPostIt(PostItRepository $postItRepository, UserRepository $userRepository): Response
+    public function randomPostIt(PostItRepository $postItRepository): Response
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -97,15 +96,9 @@ final class PostItController extends AbstractController
     }
 
     #[Route('/post_it/{id}/edit', name: 'app_postit_edit', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
+    #[IsGranted('owner', 'postIt')]
     public function editPostIt(PostIt $postIt, Request $request, EntityManagerInterface $entityManager): Response
     {
-        $isAdmin = in_array('ROLE_ADMIN', $this->getUser()->getRoles());
-        $isOwner = $postIt->getOwner() === $this->getUser();
-
-        if (!$isAdmin && !$isOwner) {
-            return $this->redirectToRoute('app_sticky_board');
-        }
-
         $form = $this->createForm(PostItType::class, $postIt);
         $form->handleRequest($request);
 
@@ -126,12 +119,9 @@ final class PostItController extends AbstractController
     }
 
     #[Route('/post_it/{id}/update-status', name: 'app_postit_update_status', requirements: ['id' => '\d+'], methods: ['PATCH'])]
+    #[IsGranted('owner', 'postIt')]
     public function updateStatus(PostIt $postIt, Request $request, EntityManagerInterface $entityManager): JsonResponse
     {
-        if ($postIt->getOwner() !== $this->getUser()) {
-            return new JsonResponse(['error' => 'Unauthorized'], Response::HTTP_FORBIDDEN);
-        }
-
         $data = json_decode($request->getContent(), true);
 
         if (!isset($data['status'])) {
@@ -167,6 +157,7 @@ final class PostItController extends AbstractController
     }
 
     #[Route('/post_it/{id}/finish', name: 'app_post_it_finish', requirements: ['id' => '\d+'], methods: ['POST'])]
+    #[IsGranted('owner', 'postIt')]
     public function finish(PostIt $postIt, EntityManagerInterface $manager, Request $request): Response
     {
         $submittedToken = $request->getPayload()->get('token');
@@ -181,6 +172,7 @@ final class PostItController extends AbstractController
     }
 
     #[Route('/post_it/{id}/delete', name: 'app_post_it_delete', requirements: ['id' => '\d+'], methods: ['POST'])]
+    #[IsGranted('owner', 'postIt')]
     public function delete(PostIt $postIt, EntityManagerInterface $manager, Request $request): Response
     {
         $submittedToken = $request->getPayload()->get('token');
@@ -193,6 +185,7 @@ final class PostItController extends AbstractController
     }
 
     #[Route('/post_it/{id}', name: 'app_post_it_details', requirements: ['id' => '\d+'], methods: 'GET')]
+    #[IsGranted('owner', 'postIt')]
     public function showDetails(?PostIt $postIt): Response
     {
         if (!$postIt) {
