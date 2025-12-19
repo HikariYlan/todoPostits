@@ -34,13 +34,15 @@
                     yesterday
                 {% elseif daysSince < 7 %}
                     {{ daysSince }} days ago
+                {% elseif (daysSince / 7)|round(0, 'floor') == 1 %}
+                    1 week ago
                 {% elseif daysSince < 30 %}
                     {{ (daysSince / 7)|round(0, 'floor') }} weeks ago
-                {% elseif (daysSince / 30)|round(0, 'floor') == 1%}
+                {% elseif (daysSince / 30)|round(0, 'floor') == 1 %}
                     1 month ago
                 {% elseif daysSince < 365 %}
                     {{ (daysSince / 30)|round(0, 'floor') }} months ago
-                {% elseif (daysSince / 365)|round(0, 'floor') == 1%}
+                {% elseif (daysSince / 365)|round(0, 'floor') == 1 %}
                     1 year ago
                 {% else %}
                     {{ (daysSince / 365)|round(0, 'floor') }} years ago
