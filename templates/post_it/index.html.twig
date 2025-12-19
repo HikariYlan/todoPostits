@@ -5,7 +5,10 @@
 {% block body %}
 
 <div class="mb-8 text-center">
-    <h1 class="text-4xl font-bold text-gray-800 mb-2">My Sticky Notes Board</h1>
+    <h1 class="text-4xl font-bold text-gray-800 mb-2 flex items-center justify-center">
+        <i class="fa-solid fa-note-sticky mr-3 text-yellow-500"></i>
+        My Sticky Notes Board
+    </h1>
     <p class="text-gray-600">Organize your tasks with style</p>
 </div>
 
@@ -19,9 +22,7 @@
                     Your sticky notes board is empty. Start organizing your tasks by creating your first post-it!
                 </p>
                 <a href="{{ path('app_postit_create') }}" class="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold text-lg rounded-lg shadow-lg hover:from-green-600 hover:to-emerald-600 transition-all duration-200 transform hover:scale-105">
-                    <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                    </svg>
+                    <i class="fas fa-plus mr-2"></i>
                     Stick a new Post-It!
                 </a>
             </div>

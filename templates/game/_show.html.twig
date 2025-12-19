@@ -23,10 +23,8 @@
     <div class="p-4 bg-stone-100">
         <h3 class="font-bold text-gray-800 text-sm line-clamp-2 min-h-[2.5rem]">{{ game.name }}</h3>
         <div class="mt-2 flex items-center text-xs text-gray-500">
-            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
-            {% if game.rtime_last_played is defined and game.rtime_last_played > 0%}
+            <i class="fa-regular fa-clock me-1"></i>
+            {% if game.rtime_last_played is defined and game.rtime_last_played > 0 %}
                 Last played
                 {% set now = "now"|date('U') %}
                 {% set daysSince = ((now - game.rtime_last_played) / 86400)|round(0, 'floor') %}

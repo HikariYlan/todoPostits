@@ -12,9 +12,7 @@
     <div class="max-w-2xl mx-auto">
         <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
             <div class="p-8 text-center">
-                <svg class="w-24 h-24 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
+                <i class="fa-solid fa-circle-exclamation fa-6x text-gray-400"></i>
                 <h2 class="text-3xl font-bold text-gray-800 mb-2">No Account Found</h2>
                 <p class="text-gray-600 text-lg mb-6">
                     No Steam account linked. Connect your Steam account to see your games!
@@ -24,9 +22,7 @@
                         <img src="{{ asset('images/steam_button.png') }}" alt="Sign in through Steam" class="h-10">
                     </a>
                     <a href="{{ path('app_sticky_board') }}" class="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-teal-500 to-cyan-500 text-white font-semibold rounded-lg shadow-lg hover:from-cyan-600 hover:to-teal-600 transition-all duration-200 transform hover:scale-105">
-                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                        </svg>
+                        <i class="fas fa-arrow-left mr-2"></i>
                         Back to sticky notes board
                     </a>
                 </div>
@@ -37,24 +33,18 @@
     <div class="max-w-2xl mx-auto">
         <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
             <div class="p-8 text-center">
-                <svg class="w-24 h-24 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
+                <i class="fa-regular fa-face-frown fa-6x text-gray-400"></i>
                 <h2 class="text-3xl font-bold text-gray-800 mb-2">No Games Found</h2>
                 <p class="text-gray-600 text-lg mb-6">
                     Your Steam account is linked but no games were found. Your game library might be private or empty.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
                     <a href="{{ path('app_steam_unlink') }}" class="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold rounded-lg shadow-lg hover:from-red-600 hover:to-red-700 transition-all duration-200 transform hover:scale-105" onclick="return confirm('Are you sure you want to unlink your Steam account?')">
-                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
-                        </svg>
+                        <i class="fa-solid fa-arrow-right-from-bracket me-1"></i>
                         Unlink Steam Account
                     </a>
                     <a href="{{ path('app_sticky_board') }}" class="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-teal-500 to-cyan-500 text-white font-semibold rounded-lg shadow-lg hover:from-cyan-600 hover:to-teal-600 transition-all duration-200 transform hover:scale-105">
-                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                        </svg>
+                        <i class="fa-solid fa-arrow-left me-1"></i>
                         Back to sticky notes board
                     </a>
                 </div>
@@ -66,9 +56,7 @@
         <div class="max-w-4xl mx-auto mb-6">
             <div class="bg-amber-50 border-l-4 border-amber-400 rounded-lg p-4 shadow-md">
                 <div class="flex items-center">
-                    <svg class="w-6 h-6 text-amber-400 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
-                    </svg>
+                    <i class="fa-solid fa-triangle-exclamation me-1 text-amber-400"></i>
                     <div>
                         <p class="text-amber-800 font-semibold">{{ task_finished|length }}/{{ tasks_required}} tasks finished today!</p>
                         <p class="text-amber-700 text-sm">Complete {{ tasks_required-task_finished|length }} task(s) to unlock the random game picker.</p>
@@ -97,13 +85,11 @@
                     </p>
                 </div>
                 <a href="{{ path(task_finished ? 'app_games_random' : 'app_post_it_random') }}" class="inline-flex items-center px-8 py-4 bg-white text-cyan-600 font-bold rounded-lg shadow-lg hover:bg-gray-100 transition-all duration-200 transform hover:scale-105">
-                    <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        {% if task_finished|length >= tasks_required %}
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        {% else %}
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
-                        {% endif %}
-                    </svg>
+                    {% if task_finished|length >= tasks_required %}
+                        <i class="fa-solid fa-rocket fa-xl me-1"></i>
+                    {% else %}
+                        <i class="fa-solid fa-clipboard-question fa-xl me-1"></i>
+                    {% endif %}
                     {{ task_finished|length >= tasks_required ? 'Pick a random game!' : 'Pick a random task!' }}
                 </a>
             </div>

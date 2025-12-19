@@ -7,9 +7,16 @@
     <div class="max-w-2xl w-full">
         <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
             <div class="bg-gradient-to-r {% if 'Edit' in submit_label %}from-purple-500 to-indigo-500{% else %}from-yellow-400 to-orange-400{% endif %} p-6 text-center">
-                <svg class="w-16 h-16 mx-auto mb-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                </svg>
+                <div class="flex items-center justify-center mb-2">
+                    <div class="relative">
+                        <i class="fa-solid fa-note-sticky fa-4x text-white"></i>
+                        {% if 'Edit' in submit_label %}
+                            <i class="fas fa-pen absolute -bottom-1 -right-1 text-white text-lg rounded-full p-1.5 shadow-lg"></i>
+                        {% else %}
+                            <i class="fas fa-plus absolute -bottom-1 -right-1 text-white text-lg rounded-full p-1.5 shadow-lg"></i>
+                        {% endif %}
+                    </div>
+                </div>
                 <h1 class="text-2xl font-bold text-white">{% if 'Edit' in submit_label %}Edit Your Post-It{% else %}Create a New Post-It{% endif %}</h1>
                 <p class="text-white text-opacity-90 text-sm mt-1">{% if 'Edit' in submit_label %}Update your task information{% else %}Add a new task to your sticky notes board{% endif %}</p>
             </div>
@@ -18,9 +25,7 @@
                 {% if form_errors(form) %}
                     <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded mb-6" role="alert">
                         <div class="flex items-center">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
+                            <i class="fas fa-exclamation-circle mr-2"></i>
                             <div>{{ form_errors(form) }}</div>
                         </div>
                     </div>
@@ -34,9 +39,7 @@
                     </label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
-                            </svg>
+                            <i class="fas fa-comment text-gray-400"></i>
                         </div>
                         {{ form_widget(form.title, {
                             'attr': {
@@ -53,9 +56,7 @@
                     </label>
                     <div class="relative">
                         <div class="absolute top-3 left-0 pl-3 pointer-events-none">
-                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path>
-                            </svg>
+                            <i class="fas fa-align-left text-gray-400"></i>
                         </div>
                         {{ form_widget(form.description, {
                             'attr': {
@@ -73,9 +74,7 @@
                     </label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                            </svg>
+                            <i class="fas fa-calendar-alt text-gray-400"></i>
                         </div>
                         {{ form_widget(form.dueDate, {
                             'attr': {
@@ -92,9 +91,7 @@
                     </label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
+                            <i class="fas fa-check-circle text-gray-400"></i>
                         </div>
                         {{ form_widget(form.status, {
                             'attr': {
@@ -106,13 +103,11 @@
                 </div>
 
                 <button type="submit" class="w-full bg-gradient-to-r {% if 'Edit' in submit_label %}from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600{% else %}from-yellow-400 to-orange-400 hover:from-yellow-500 hover:to-orange-500{% endif %} text-white font-bold py-3 rounded-lg shadow-lg transition-all duration-200 transform hover:scale-105 flex items-center justify-center">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        {% if 'Edit' in submit_label %}
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                        {% else %}
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                        {% endif %}
-                    </svg>
+                    {% if 'Edit' in submit_label %}
+                        <i class="fas fa-check mr-2"></i>
+                    {% else %}
+                        <i class="fas fa-plus mr-2"></i>
+                    {% endif %}
                     {{ submit_label }}
                 </button>
 
