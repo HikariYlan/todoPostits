@@ -34,20 +34,39 @@
 
             <div>
                 <label class="block text-sm font-bold text-gray-700 mb-3">
-                    <i class="fas fa-check-circle mr-2 text-indigo-500"></i>
+                    <i class="fas fa-user-circle mr-2 text-indigo-500"></i>
                     Your avatar
                 </label>
-                {{ form_widget(form.avatar, {
-                    'attr': {
-                        'class': 'w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-200'
-                    }
-                }) }}
-                {% if form_errors(form.requiredTasks) %}
-                    <div class="mt-2 text-red-600 text-sm">
-                        {{ form_errors(form.requiredTasks) }}
+                <div class="flex items-center gap-4">
+                    {% if app.user.avatar %}
+                        <div class="flex-shrink-0">
+                            <img
+                                src="{{ path('app_user_avatar', {id: app.user.id}) }}?v={{ 'now'|date('U') }}"
+                                alt="{{ app.user.username }}"
+                                class="w-20 h-20 rounded-full border-2 border-indigo-300 object-cover"
+                            >
+                        </div>
+                    {% endif %}
+                    <div class="flex-1">
+                        {{ form_widget(form.avatar, {
+                            'attr': {
+                                'class': 'w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-200',
+                                'accept': 'image/*'
+                            }
+                        }) }}
+                        {% if form_errors(form.avatar) %}
+                            <div class="mt-2 text-red-600 text-sm">
+                                {{ form_errors(form.avatar) }}
+                            </div>
+                        {% endif %}
+                        <p class="mt-2 text-sm text-gray-500">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            Accepted formats: JPEG, PNG, GIF, WebP
+                        </p>
                     </div>
-                {% endif %}
+                </div>
             </div>
+
 
             <div class="flex gap-4 pt-4">
                 <button type="submit" class="flex-1 inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-bold rounded-lg shadow-lg hover:from-indigo-600 hover:to-purple-600 transition-all duration-200 transform hover:scale-105">
