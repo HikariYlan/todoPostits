@@ -6,6 +6,8 @@
     {{ form_start(form) }}
     <label>Tag name</label>
     {{ form_widget(form.name) }}
+    <label>Color</label>
+    {{ form_widget(form.color) }}
     <button type="submit">{{ submit_label }}</button>
     {{ form_end(form) }}
 {% endblock %}
