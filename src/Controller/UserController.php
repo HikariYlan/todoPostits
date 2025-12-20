@@ -37,7 +37,7 @@ final class UserController extends AbstractController
             return $this->redirectToRoute('app_sticky_board');
         }
 
-        return $this->render('user/index.html.twig', [
+        return $this->render('user/settings.html.twig', [
             'form' => $form,
             'submit_label' => 'Update your profile',
         ]);
@@ -84,7 +84,7 @@ final class UserController extends AbstractController
     public function steamAvatar(User $user, SteamAPI $steamAPI): Response
     {
         if (!$user->getSteamID()) {
-            throw $this->createNotFoundException('User has no Steam ID');
+            return new Response();
         }
 
         $steamData = $steamAPI->getUserSummary($user->getSteamID());
