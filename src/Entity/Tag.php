@@ -28,6 +28,9 @@ class Tag
     #[ORM\JoinColumn(nullable: false)]
     private ?User $owner = null;
 
+    #[ORM\Column(length: 50)]
+    private ?string $color = null;
+
     public function __construct()
     {
         $this->postIts = new ArrayCollection();
@@ -85,6 +88,18 @@ class Tag
     public function setOwner(?User $owner): static
     {
         $this->owner = $owner;
+
+        return $this;
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(string $color): static
+    {
+        $this->color = $color;
 
         return $this;
     }
