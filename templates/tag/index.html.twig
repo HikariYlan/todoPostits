@@ -5,8 +5,9 @@
 {% block body %}
     <ul>
         {% for tag in tags %}
-            <li>{{ tag.name }}</li>
+            <li>{{ tag.name }} <a href="{{ path('app_tag_edit', {id: tag.id}) }}"><i class="fa-solid fa-pen"></i></a></li>
         {% endfor %}
     </ul>
+    <a href="{{ path('app_tag_create') }}">Create a new tag</a>
 {% endblock %}
 

@@ -38,11 +38,31 @@ final class TagController extends AbstractController
             $manager->persist($tag);
             $manager->flush();
 
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_tag');
         }
 
         return $this->render('tag/_form.html.twig', [
             'form' => $form,
+            'submit_label' => 'Create a new tag',
+        ]);
+    }
+
+    #[Route('/tag/{id}/edit', name: 'app_tag_edit', requirements: ['id' => '\d+'])]
+    public function editTag(Request $request, Tag $tag, EntityManagerInterface $manager): Response
+    {
+        $form = $this->createForm(TagFormType::class, $tag);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager->persist($tag);
+            $manager->flush();
+
+            return $this->redirectToRoute('app_tag');
+        }
+
+        return $this->render('tag/_form.html.twig', [
+            'form' => $form,
+            'submit_label' => 'Edit the tag',
         ]);
     }
 }
