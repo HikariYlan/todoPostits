@@ -24,6 +24,10 @@ class Tag
     #[ORM\ManyToMany(targetEntity: PostIt::class, mappedBy: 'tags')]
     private Collection $postIts;
 
+    #[ORM\ManyToOne(inversedBy: 'tags')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $owner = null;
+
     public function __construct()
     {
         $this->postIts = new ArrayCollection();
@@ -69,6 +73,18 @@ class Tag
         if ($this->postIts->removeElement($postIt)) {
             $postIt->removeTag($this);
         }
+
+        return $this;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): static
+    {
+        $this->owner = $owner;
 
         return $this;
     }
