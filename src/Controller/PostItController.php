@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\PostIt;
 use App\Entity\User;
 use App\Enum\Status;
-use App\Form\PostItType;
+use App\Form\PostItFormType;
 use App\Repository\PostItRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -76,7 +76,7 @@ final class PostItController extends AbstractController
     {
         $postIt = new PostIt();
         $postIt->setOwner($this->getUser());
-        $form = $this->createForm(PostItType::class, $postIt);
+        $form = $this->createForm(PostItFormType::class, $postIt);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -99,7 +99,7 @@ final class PostItController extends AbstractController
     #[IsGranted('owner', 'postIt')]
     public function editPostIt(PostIt $postIt, Request $request, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(PostItType::class, $postIt);
+        $form = $this->createForm(PostItFormType::class, $postIt);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
