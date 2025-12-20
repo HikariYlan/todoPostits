@@ -3,14 +3,16 @@
 {% block title %}TODOs PostIt! - Tags{% endblock %}
 
 {% block body %}
+
     <ul>
         {% for tag in tags %}
-            <li>{{ tag.name }}
+            <li class="flex items-center">
+                <p class="rounded-lg bg-{{ tag.color }}-500 border-{{ tag.color }}-600 border-2 m-2 px-1">{{ tag.name }}</p>
                 <a href="{{ path('app_tag_edit', {id: tag.id}) }}"><i class="fa-solid fa-pen"></i></a>
                 {{ include('tag/delete.html.twig', {id: tag.id}) }}
             </li>
         {% endfor %}
     </ul>
-    <a href="{{ path('app_tag_create') }}">Create a new tag</a>
+    <button class="bg-from-to-r from-yellow-300 to-yellow-500"><a href="{{ path('app_tag_create') }}">Create a new tag</a></button>
 {% endblock %}
 
