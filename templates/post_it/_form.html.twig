@@ -102,6 +102,31 @@
                     {{ form_errors(form.status) }}
                 </div>
 
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        <i class="fas fa-tags text-gray-400 mr-1"></i>
+                        Tags
+                    </label>
+                    <div class="border border-gray-300 rounded-lg p-4 bg-gray-50">
+                        {% if form.tags|length > 0 %}
+                            <div class="flex flex-wrap gap-2" id="tags-container">
+                                {% for tag in form.tags %}
+                                    <label class="tag-checkbox inline-flex items-center cursor-pointer bg-white border-2 border-gray-300 rounded-full px-4 py-2 hover:border-yellow-400 transition-all">
+                                        {{ form_widget(tag, {'attr': {'class': 'tag-input sr-only'}}) }}
+                                        <span class="text-sm font-medium text-gray-700">{{ tag.vars.label }}</span>
+                                    </label>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p class="text-gray-500 text-sm text-center">
+                                <i class="fas fa-info-circle mr-1"></i>
+                                No tags available. <a href="{{ path('app_tag_create') }}" class="underline">Create tags first!</a>
+                            </p>
+                        {% endif %}
+                    </div>
+                    {{ form_errors(form.tags) }}
+                </div>
+
                 <button type="submit" class="w-full bg-gradient-to-r {% if 'Edit' in submit_label %}from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600{% else %}from-yellow-400 to-orange-400 hover:from-yellow-500 hover:to-orange-500{% endif %} text-white font-bold py-3 rounded-lg shadow-lg transition-all duration-200 transform hover:scale-105 flex items-center justify-center">
                     {% if 'Edit' in submit_label %}
                         <i class="fas fa-check mr-2"></i>
@@ -124,4 +149,31 @@
         </div>
     </div>
 </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tagLabels = document.querySelectorAll('.tag-checkbox');
+
+            tagLabels.forEach(label => {
+                const checkbox = label.querySelector('.tag-input');
+
+                // Initial state
+                if (checkbox.checked) {
+                    label.classList.add('bg-yellow-100', 'border-yellow-500');
+                    label.classList.remove('border-gray-300');
+                }
+
+                // Toggle on click
+                checkbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        label.classList.add('bg-yellow-100', 'border-yellow-500');
+                        label.classList.remove('border-gray-300');
+                    } else {
+                        label.classList.remove('bg-yellow-100', 'border-yellow-500');
+                        label.classList.add('border-gray-300');
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}
