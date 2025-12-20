@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class TagController extends AbstractController
 {
@@ -64,5 +65,17 @@ final class TagController extends AbstractController
             'form' => $form,
             'submit_label' => 'Edit the tag',
         ]);
+    }
+
+    #[Route('/tag/{id}/delete', name: 'app_tag_delete', requirements: ['id' => '\d+'], methods: ['POST'])]
+    public function deleteTag(Tag $tag, EntityManagerInterface $manager, Request $request): Response
+    {
+        $submittedToken = $request->getPayload()->get('token');
+        if ($this->isCsrfTokenValid('delete-item', $submittedToken)) {
+            $manager->remove($tag);
+            $manager->flush();
+        }
+
+        return $this->redirectToRoute('app_tag');
     }
 }
