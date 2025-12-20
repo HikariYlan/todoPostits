@@ -15,4 +15,13 @@ class TagRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Tag::class);
     }
+
+    public function getOwnedTags(int $userId)
+    {
+        return $this->createQueryBuilder('tag')
+            ->where('tag.owner = :userId')
+            ->setParameter(':userId', $userId)
+            ->getQuery()
+            ->getResult();
+    }
 }
