@@ -3,7 +3,12 @@
 namespace App\Form;
 
 use App\Entity\PostIt;
+use App\Entity\Tag;
+use App\Entity\User;
 use App\Enum\Status;
+use App\Repository\TagRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
@@ -13,8 +18,17 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PostItFormType extends AbstractType
 {
+    public function __construct(
+        private readonly Security $security,
+        private readonly TagRepository $tagRepository,
+    ) {
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        /** @var User $user */
+        $user = $this->security->getUser();
+
         $builder
             ->add('title')
             ->add('description', TextareaType::class, [
@@ -38,6 +52,14 @@ class PostItFormType extends AbstractType
                     'ON GOING' => Status::ON_GOING,
                     'FINISHED' => Status::FINISHED,
                 ],
+            ])
+            ->add('tags', EntityType::class, [
+                'class' => Tag::class,
+                'choice_label' => 'name',
+                'multiple' => true,
+                'expanded' => true,
+                'required' => false,
+                'choices' => $this->tagRepository->getOwnedTags($user->getId()),
             ])
         ;
     }
