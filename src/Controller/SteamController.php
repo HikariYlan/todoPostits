@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class SteamController extends AbstractController
 {
     #[Route('/steam/auth', name: 'app_steam_auth')]
-    public function auth(UrlGeneratorInterface $urlGenerator): Response
+    public function authentication(UrlGeneratorInterface $urlGenerator): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -26,7 +26,7 @@ class SteamController extends AbstractController
     }
 
     #[Route('/steam/callback', name: 'app_steam_callback')]
-    public function callback(
+    public function authenticationCallback(
         Request $request,
         UrlGeneratorInterface $urlGenerator,
         EntityManagerInterface $entityManager,
@@ -47,11 +47,11 @@ class SteamController extends AbstractController
         $user->setSteamID($steamId);
         $entityManager->flush();
 
-        return $this->redirectToRoute('app_games');
+        return $this->redirectToRoute('app_game');
     }
 
     #[Route('/steam/unlink', name: 'app_steam_unlink')]
-    public function unlink(EntityManagerInterface $entityManager): Response
+    public function unlinkAccount(EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -59,6 +59,6 @@ class SteamController extends AbstractController
         $user->setSteamID(null);
         $entityManager->flush();
 
-        return $this->redirectToRoute('app_games');
+        return $this->redirectToRoute('app_game');
     }
 }

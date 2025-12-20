@@ -44,7 +44,7 @@ final class UserController extends AbstractController
     }
 
     #[Route('/user/{id}/avatar/delete', name: 'app_user_avatar_delete', requirements: ['id' => '\d+'], methods: ['POST'])]
-    public function delete(EntityManagerInterface $manager, Request $request): Response
+    public function deleteAvatar(EntityManagerInterface $manager, Request $request): Response
     {/** @var User $user */
         $user = $this->getUser();
         $submittedToken = $request->getPayload()->get('token');
@@ -57,7 +57,7 @@ final class UserController extends AbstractController
     }
 
     #[Route('/user/{id}/avatar', name: 'app_user_avatar')]
-    public function avatar(User $user): Response
+    public function displayAvatar(User $user): Response
     {
         if (!$user->getAvatar()) {
             return new Response();
@@ -81,7 +81,7 @@ final class UserController extends AbstractController
     }
 
     #[Route('/user/{id}/steam_avatar', name: 'app_user_steam_avatar')]
-    public function steamAvatar(User $user, SteamAPI $steamAPI): Response
+    public function displaySteamAvatar(User $user, SteamAPI $steamAPI): Response
     {
         if (!$user->getSteamID()) {
             return new Response();

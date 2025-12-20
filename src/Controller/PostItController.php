@@ -120,7 +120,7 @@ final class PostItController extends AbstractController
 
     #[Route('/post_it/{id}/update-status', name: 'app_post_it_update_status', requirements: ['id' => '\d+'], methods: ['PATCH'])]
     #[IsGranted('owner', 'postIt')]
-    public function updateStatus(PostIt $postIt, Request $request, EntityManagerInterface $entityManager): JsonResponse
+    public function updateStatusPostIt(PostIt $postIt, Request $request, EntityManagerInterface $entityManager): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
@@ -158,7 +158,7 @@ final class PostItController extends AbstractController
 
     #[Route('/post_it/{id}/finish', name: 'app_post_it_finish', requirements: ['id' => '\d+'], methods: ['POST'])]
     #[IsGranted('owner', 'postIt')]
-    public function finish(PostIt $postIt, EntityManagerInterface $manager, Request $request): Response
+    public function finishPostIt(PostIt $postIt, EntityManagerInterface $manager, Request $request): Response
     {
         $submittedToken = $request->getPayload()->get('token');
         if ($this->isCsrfTokenValid('finish-postIt', $submittedToken)) {
@@ -173,7 +173,7 @@ final class PostItController extends AbstractController
 
     #[Route('/post_it/{id}/delete', name: 'app_post_it_delete', requirements: ['id' => '\d+'], methods: ['POST'])]
     #[IsGranted('owner', 'postIt')]
-    public function delete(PostIt $postIt, EntityManagerInterface $manager, Request $request): Response
+    public function deletePostIt(PostIt $postIt, EntityManagerInterface $manager, Request $request): Response
     {
         $submittedToken = $request->getPayload()->get('token');
         if ($this->isCsrfTokenValid('delete-item', $submittedToken)) {
@@ -186,7 +186,7 @@ final class PostItController extends AbstractController
 
     #[Route('/post_it/{id}', name: 'app_post_it_details', requirements: ['id' => '\d+'], methods: 'GET')]
     #[IsGranted('owner', 'postIt')]
-    public function showDetails(?PostIt $postIt): Response
+    public function showPostIt(?PostIt $postIt): Response
     {
         if (!$postIt) {
             return $this->render('post_it/show.html.twig', [
