@@ -3,177 +3,187 @@
 {% block title %}TODOs PostIt! - {{ submit_label }}{% endblock %}
 
 {% block body %}
-<div class="min-h-[80vh] flex items-center justify-center">
-    <div class="max-w-2xl w-full">
-        <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
-            <div class="bg-gradient-to-r {% if 'Edit' in submit_label %}from-purple-500 to-indigo-500{% else %}from-yellow-400 to-orange-400{% endif %} p-6 text-center">
-                <div class="flex items-center justify-center mb-2">
-                    <div class="relative">
-                        <i class="fa-solid fa-note-sticky fa-4x text-white"></i>
-                        {% if 'Edit' in submit_label %}
-                            <i class="fas fa-pen absolute -bottom-1 -right-1 text-white text-lg rounded-full p-1.5 shadow-lg"></i>
-                        {% else %}
-                            <i class="fas fa-plus absolute -bottom-1 -right-1 text-white text-lg rounded-full p-1.5 shadow-lg"></i>
-                        {% endif %}
-                    </div>
-                </div>
-                <h1 class="text-2xl font-bold text-white">{% if 'Edit' in submit_label %}Edit Your Post-It{% else %}Create a New Post-It{% endif %}</h1>
-                <p class="text-white text-opacity-90 text-sm mt-1">{% if 'Edit' in submit_label %}Update your task information{% else %}Add a new task to your sticky notes board{% endif %}</p>
-            </div>
-
-            <div class="p-8">
-                {% if form_errors(form) %}
-                    <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded mb-6" role="alert">
-                        <div class="flex items-center">
-                            <i class="fas fa-exclamation-circle mr-2"></i>
-                            <div>{{ form_errors(form) }}</div>
+    <div class="min-h-[80vh] flex items-center justify-center">
+        <div class="max-w-2xl w-full">
+            <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
+                <div class="bg-gradient-to-r {% if 'Edit' in submit_label %}from-purple-500 to-indigo-500{% else %}from-yellow-400 to-orange-400{% endif %} p-6 text-center">
+                    <div class="flex items-center justify-center mb-2">
+                        <div class="relative">
+                            <i class="fa-solid fa-note-sticky fa-4x text-white"></i>
+                            {% if 'Edit' in submit_label %}
+                                <i class="fas fa-pen absolute -bottom-1 -right-1 text-white text-lg rounded-full p-1.5 shadow-lg"></i>
+                            {% else %}
+                                <i class="fas fa-plus absolute -bottom-1 -right-1 text-white text-lg rounded-full p-1.5 shadow-lg"></i>
+                            {% endif %}
                         </div>
                     </div>
-                {% endif %}
-
-                {{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
-
-                <div>
-                    <label for="{{ form.title.vars.id }}" class="block text-sm font-semibold text-gray-700 mb-2">
-                        Title
-                    </label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <i class="fas fa-comment text-gray-400"></i>
-                        </div>
-                        {{ form_widget(form.title, {
-                            'attr': {
-                                'class': 'w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all'
-                            }
-                        }) }}
-                    </div>
-                    {{ form_errors(form.title) }}
+                    <h1 class="text-2xl font-bold text-white">{% if 'Edit' in submit_label %}Edit Your Post-It{% else %}Create a New Post-It{% endif %}</h1>
+                    <p class="text-white text-opacity-90 text-sm mt-1">{% if 'Edit' in submit_label %}Update your task information{% else %}Add a new task to your sticky notes board{% endif %}</p>
                 </div>
 
-                <div>
-                    <label for="{{ form.description.vars.id }}" class="block text-sm font-semibold text-gray-700 mb-2">
-                        Description
-                    </label>
-                    <div class="relative">
-                        <div class="absolute top-3 left-0 pl-3 pointer-events-none">
-                            <i class="fas fa-align-left text-gray-400"></i>
-                        </div>
-                        {{ form_widget(form.description, {
-                            'attr': {
-                                'class': 'w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all',
-                                'rows': '4'
-                            }
-                        }) }}
-                    </div>
-                    {{ form_errors(form.description) }}
-                </div>
-
-                <div>
-                    <label for="{{ form.dueDate.vars.id }}" class="block text-sm font-semibold text-gray-700 mb-2">
-                        Due Date
-                    </label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <i class="fas fa-calendar-alt text-gray-400"></i>
-                        </div>
-                        {{ form_widget(form.dueDate, {
-                            'attr': {
-                                'class': 'w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all'
-                            }
-                        }) }}
-                    </div>
-                    {{ form_errors(form.dueDate) }}
-                </div>
-
-                <div>
-                    <label for="{{ form.status.vars.id }}" class="block text-sm font-semibold text-gray-700 mb-2">
-                        Status
-                    </label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <i class="fas fa-check-circle text-gray-400"></i>
-                        </div>
-                        {{ form_widget(form.status, {
-                            'attr': {
-                                'class': 'w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all appearance-none'
-                            }
-                        }) }}
-                    </div>
-                    {{ form_errors(form.status) }}
-                </div>
-
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">
-                        <i class="fas fa-tags text-gray-400 mr-1"></i>
-                        Tags
-                    </label>
-                    <div class="border border-gray-300 rounded-lg p-4 bg-gray-50">
-                        {% if form.tags|length > 0 %}
-                            <div class="flex flex-wrap gap-2" id="tags-container">
-                                {% for tag in form.tags %}
-                                    <label class="tag-checkbox inline-flex items-center cursor-pointer bg-white border-2 border-gray-300 rounded-full px-4 py-2 hover:border-yellow-400 transition-all">
-                                        {{ form_widget(tag, {'attr': {'class': 'tag-input sr-only'}}) }}
-                                        <span class="text-sm font-medium text-gray-700">{{ tag.vars.label }}</span>
-                                    </label>
-                                {% endfor %}
+                <div class="p-8">
+                    {% if form_errors(form) %}
+                        <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded mb-6" role="alert">
+                            <div class="flex items-center">
+                                <i class="fas fa-exclamation-circle mr-2"></i>
+                                <div>{{ form_errors(form) }}</div>
                             </div>
-                        {% else %}
-                            <p class="text-gray-500 text-sm text-center">
-                                <i class="fas fa-info-circle mr-1"></i>
-                                No tags available. <a href="{{ path('app_tag_create') }}" class="underline">Create tags first!</a>
-                            </p>
-                        {% endif %}
-                    </div>
-                    {{ form_errors(form.tags) }}
-                </div>
-
-                <button type="submit" class="w-full bg-gradient-to-r {% if 'Edit' in submit_label %}from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600{% else %}from-yellow-400 to-orange-400 hover:from-yellow-500 hover:to-orange-500{% endif %} text-white font-bold py-3 rounded-lg shadow-lg transition-all duration-200 transform hover:scale-105 flex items-center justify-center">
-                    {% if 'Edit' in submit_label %}
-                        <i class="fas fa-check mr-2"></i>
-                    {% else %}
-                        <i class="fas fa-plus mr-2"></i>
+                        </div>
                     {% endif %}
-                    {{ submit_label }}
-                </button>
 
-                {{ form_end(form) }}
+                    {{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
 
-                <div class="text-center pt-6 border-t border-gray-200">
-                    <p class="text-gray-600">
-                        <a href="{{ path('app_sticky_board') }}" class="{% if 'Edit' in submit_label %}text-purple-600 hover:text-purple-700{% else %}text-yellow-600 hover:text-yellow-700{% endif %} font-semibold transition-colors">
-                            ← Back to sticky notes board
-                        </a>
-                    </p>
+                    <div>
+                        <label for="{{ form.title.vars.id }}" class="block text-sm font-semibold text-gray-700 mb-2">
+                            Title
+                        </label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-comment text-gray-400"></i>
+                            </div>
+                            {{ form_widget(form.title, {
+                                'attr': {
+                                    'class': 'w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all'
+                                }
+                            }) }}
+                        </div>
+                        {{ form_errors(form.title) }}
+                    </div>
+
+                    <div>
+                        <label for="{{ form.description.vars.id }}" class="block text-sm font-semibold text-gray-700 mb-2">
+                            Description
+                        </label>
+                        <div class="relative">
+                            <div class="absolute top-3 left-0 pl-3 pointer-events-none">
+                                <i class="fas fa-align-left text-gray-400"></i>
+                            </div>
+                            {{ form_widget(form.description, {
+                                'attr': {
+                                    'class': 'w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all',
+                                    'rows': '4'
+                                }
+                            }) }}
+                        </div>
+                        {{ form_errors(form.description) }}
+                    </div>
+
+                    <div>
+                        <label for="{{ form.dueDate.vars.id }}" class="block text-sm font-semibold text-gray-700 mb-2">
+                            Due Date
+                        </label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-calendar-alt text-gray-400"></i>
+                            </div>
+                            {{ form_widget(form.dueDate, {
+                                'attr': {
+                                    'class': 'w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all'
+                                }
+                            }) }}
+                        </div>
+                        {{ form_errors(form.dueDate) }}
+                    </div>
+
+                    <div>
+                        <label for="{{ form.status.vars.id }}" class="block text-sm font-semibold text-gray-700 mb-2">
+                            Status
+                        </label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-check-circle text-gray-400"></i>
+                            </div>
+                            {{ form_widget(form.status, {
+                                'attr': {
+                                    'class': 'w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all appearance-none'
+                                }
+                            }) }}
+                        </div>
+                        {{ form_errors(form.status) }}
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            <i class="fas fa-tags text-gray-400 mr-1"></i>
+                            Tags
+                        </label>
+                        <div class="border border-gray-300 rounded-lg p-4 bg-gray-50">
+                            {% if form.tags|length > 0 %}
+                                <div class="flex flex-wrap gap-2" id="tags-container">
+                                    {% for tag in form.tags %}
+                                        <label class="tag-checkbox inline-flex items-center cursor-pointer bg-white border-2 border-gray-300 rounded-full px-4 py-2 hover:border-yellow-400 transition-all">
+                                            {{ form_widget(tag, {'attr': {'class': 'tag-input sr-only'}}) }}
+                                            <span class="text-sm font-medium text-gray-700">{{ tag.vars.label }}</span>
+                                        </label>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <p class="text-gray-500 text-sm text-center">
+                                    <i class="fas fa-info-circle mr-1"></i>
+                                    No tags available. <a href="{{ path('app_tag_create') }}" class="underline">Create tags first!</a>
+                                </p>
+                            {% endif %}
+                        </div>
+                        {{ form_errors(form.tags) }}
+                    </div>
+
+                    <button type="submit" class="w-full bg-gradient-to-r {% if 'Edit' in submit_label %}from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600{% else %}from-yellow-400 to-orange-400 hover:from-yellow-500 hover:to-orange-500{% endif %} text-white font-bold py-3 rounded-lg shadow-lg transition-all duration-200 transform hover:scale-105 flex items-center justify-center">
+                        {% if 'Edit' in submit_label %}
+                            <i class="fas fa-check mr-2"></i>
+                        {% else %}
+                            <i class="fas fa-plus mr-2"></i>
+                        {% endif %}
+                        {{ submit_label }}
+                    </button>
+
+                    {{ form_end(form) }}
+
+                    <div class="text-center pt-6 border-t border-gray-200">
+                        <p class="text-gray-600">
+                            <a href="{{ path('app_sticky_board') }}" class="{% if 'Edit' in submit_label %}text-purple-600 hover:text-purple-700{% else %}text-yellow-600 hover:text-yellow-700{% endif %} font-semibold transition-colors">
+                                ← Back to sticky notes board
+                            </a>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        function initializeTags() {
             const tagLabels = document.querySelectorAll('.tag-checkbox');
 
             tagLabels.forEach(label => {
                 const checkbox = label.querySelector('.tag-input');
 
-                // Initial state
-                if (checkbox.checked) {
-                    label.classList.add('bg-yellow-100', 'border-yellow-500');
-                    label.classList.remove('border-gray-300');
-                }
+                if (!checkbox) return;
 
-                // Toggle on click
-                checkbox.addEventListener('change', function() {
-                    if (this.checked) {
+                function updateStyle() {
+                    if (checkbox.checked) {
                         label.classList.add('bg-yellow-100', 'border-yellow-500');
                         label.classList.remove('border-gray-300');
                     } else {
                         label.classList.remove('bg-yellow-100', 'border-yellow-500');
                         label.classList.add('border-gray-300');
                     }
-                });
+                }
+
+                updateStyle();
+
+                checkbox.addEventListener('change', updateStyle);
             });
+        }
+
+        window.addEventListener('load', function() {
+            setTimeout(initializeTags, 50);
         });
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() {
+                setTimeout(initializeTags, 50);
+            });
+        } else {
+            setTimeout(initializeTags, 50);
+        }
     </script>
 {% endblock %}
