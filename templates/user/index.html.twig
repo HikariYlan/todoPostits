@@ -38,17 +38,17 @@
                         Your avatar
                     </label>
                     <div class="flex items-center gap-4">
-                        <div id="imagePreview" class="flex-shrink-0 {{ not app.user.avatar ? "hidden" : ""}}">
+                        <div id="imagePreview" class="flex-shrink-0 {{ not app.user.avatar ? "hidden" : ""}} flex items-center">
                             <img
                                 id="imagePreviewBig"
                                 src="{{ path('app_user_avatar', {id: app.user.id}) }}?v={{ 'now'|date('U') }}"
-                                alt="{{ app.user.username }}"
-                                class="w-20 h-20 rounded-full border-2 border-indigo-300 object-cover"
+                                alt="{{ app.user.username }} avatar"
+                                class="w-20 h-20 rounded-full border-2 border-indigo-300 object-cover me-2"
                             >
                             <img
                                 id="imagePreviewLittle"
                                 src="{{ path('app_user_avatar', {id: app.user.id}) }}?v={{ 'now'|date('U') }}"
-                                alt="{{ app.user.username }}"
+                                alt="{{ app.user.username }} avatar"
                                 class="w-10 h-10 rounded-full border-2 border-indigo-300 object-cover"
                             >
                         </div>
@@ -79,14 +79,16 @@
                         <i class="fas fa-check mr-2"></i>
                         {{ submit_label }}
                     </button>
+                    {{ form_end(form) }}
+                    {% if app.user.avatar %}
+                        {{ include('user/avatar/delete.html.twig', {user: app.user}) }}
+                    {% endif %}
 
                     <a href="{{ path('app_sticky_board') }}" class="inline-flex items-center justify-center px-6 py-3 bg-gray-200 text-gray-700 font-semibold rounded-lg shadow hover:bg-gray-300 transition-all duration-200">
                         <i class="fas fa-arrow-left mr-2"></i>
                         Cancel
                     </a>
                 </div>
-
-                {{ form_end(form) }}
             </div>
         </div>
     </div>
