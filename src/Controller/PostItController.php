@@ -71,7 +71,7 @@ final class PostItController extends AbstractController
         ]);
     }
 
-    #[Route('/post_it/new', name: 'app_postit_create', methods: ['GET', 'POST'])]
+    #[Route('/post_it/new', name: 'app_post_it_create', methods: ['GET', 'POST'])]
     public function createPostIt(Request $request, EntityManagerInterface $entityManager): Response
     {
         $postIt = new PostIt();
@@ -95,7 +95,7 @@ final class PostItController extends AbstractController
         ]);
     }
 
-    #[Route('/post_it/{id}/edit', name: 'app_postit_edit', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
+    #[Route('/post_it/{id}/edit', name: 'app_post_it_edit', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     #[IsGranted('owner', 'postIt')]
     public function editPostIt(PostIt $postIt, Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -118,7 +118,7 @@ final class PostItController extends AbstractController
         ]);
     }
 
-    #[Route('/post_it/{id}/update-status', name: 'app_postit_update_status', requirements: ['id' => '\d+'], methods: ['PATCH'])]
+    #[Route('/post_it/{id}/update-status', name: 'app_post_it_update_status', requirements: ['id' => '\d+'], methods: ['PATCH'])]
     #[IsGranted('owner', 'postIt')]
     public function updateStatus(PostIt $postIt, Request $request, EntityManagerInterface $entityManager): JsonResponse
     {

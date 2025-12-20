@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class GameController extends AbstractController
 {
-    #[Route('/games', name: 'app_games')]
+    #[Route('/games', name: 'app_game')]
     public function index(SteamAPI $steamAPI, UserRepository $userRepository, PostItRepository $postItRepository): Response
     {
         if (!$this->getUser()) {
@@ -44,7 +44,7 @@ final class GameController extends AbstractController
         ]);
     }
 
-    #[Route('/games/random', name: 'app_games_random')]
+    #[Route('/games/random', name: 'app_game_random')]
     public function randomGame(SteamAPI $steamAPI, PostItRepository $postItRepository): Response
     {
         /** @var User $user */

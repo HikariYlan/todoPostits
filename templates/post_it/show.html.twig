@@ -89,7 +89,7 @@
                         {% if not postIt.finishDate %}
                             {{ include('post_it/finish.html.twig') }}
                         {% endif %}
-                        <a href="{{ path('app_postit_edit', {id: postIt.id}) }}" class="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white font-semibold rounded-lg shadow-lg transition-all duration-200 transform hover:scale-105">
+                        <a href="{{ path('app_post_it_edit', {id: postIt.id}) }}" class="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white font-semibold rounded-lg shadow-lg transition-all duration-200 transform hover:scale-105">
                             <i class="fas fa-edit mr-2"></i>
                             Edit Post-It
                         </a>
