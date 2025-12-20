@@ -23,13 +23,13 @@
                             {% if app.user.avatar %}
                                 <img
                                     src="{{ path('app_user_avatar', {id: app.user.id}) }}?v={{ 'now'|date('U') }}"
-                                    alt="{{ app.user.username }}"
+                                    alt="{{ app.user.username }} avatar"
                                     class="w-10 h-10 rounded-full border-2 border-white me-2 object-cover"
                                 >
                             {% elseif app.user.steamID %}
                                 <img
                                     src="{{ path('app_user_steam_avatar', {id: app.user.id}) }}"
-                                    alt="{{ app.user.username }}"
+                                    alt="{{ app.user.username }} avatar"
                                     class="w-10 h-10 rounded-full border-2 border-white me-2 object-cover"
                                 >
                             {% else %}
