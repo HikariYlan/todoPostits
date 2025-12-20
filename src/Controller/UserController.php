@@ -43,6 +43,19 @@ final class UserController extends AbstractController
         ]);
     }
 
+    #[Route('/user/{id}/avatar/delete', name: 'app_user_avatar_delete', requirements: ['id' => '\d+'], methods: ['POST'])]
+    public function delete(EntityManagerInterface $manager, Request $request): Response
+    {/** @var User $user */
+        $user = $this->getUser();
+        $submittedToken = $request->getPayload()->get('token');
+        if ($this->isCsrfTokenValid('delete-item', $submittedToken)) {
+            $user->setAvatar(null);
+            $manager->flush();
+        }
+
+        return $this->redirectToRoute('app_user_settings');
+    }
+
     #[Route('/user/{id}/avatar', name: 'app_user_avatar')]
     public function avatar(User $user): Response
     {
@@ -79,7 +92,7 @@ final class UserController extends AbstractController
         if (!$avatarUrl) {
             return new Response();
         }
-        return $this->redirect($avatarUrl);
 
+        return $this->redirect($avatarUrl);
     }
 }
