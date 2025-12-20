@@ -21,6 +21,16 @@
                         Finished: {{ postIt.finishDate|date('d/m/Y') }}
                     </p>
                 {% endif %}
+                {% if postIt.tags|length > 0 %}
+                    <div class="flex flex-wrap gap-1 mt-2">
+                        <i class="fa-solid fa-tag text-gray-600"></i>
+                        {% for tag in postIt.tags %}
+                            <span class="inline-flex items-center px-2 py-0.5 bg-yellow-100 border border-yellow-300 text-yellow-800 rounded-full text-xs font-medium">
+                                {{ tag.name }}
+                            </span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
