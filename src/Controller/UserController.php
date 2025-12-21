@@ -42,7 +42,9 @@ final class UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_sticky_board');
+            return $this->redirectToRoute('app_user_profile', [
+                'id' => $user->getId(),
+            ]);
         }
 
         return $this->render('user/settings.html.twig', [
