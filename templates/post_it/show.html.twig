@@ -93,8 +93,7 @@
                         </div>
                         <div class="flex flex-wrap gap-2">
                             {% for tag in postIt.tags %}
-                                <span class="inline-flex items-center px-3 py-1 bg-yellow-100 border-2 border-yellow-300 text-yellow-800 rounded-full text-sm font-medium">
-                                    <i class="fas fa-tag mr-1.5"></i>
+                                <span class="inline-flex items-center px-3 py-1 bg-{{ tag.color }}-500 border-2 border-{{ tag.color }}-600 text-white rounded-full text-sm font-medium">
                                     {{ tag.name }}
                                 </span>
                             {% endfor %}
