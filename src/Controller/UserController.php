@@ -14,8 +14,16 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class UserController extends AbstractController
 {
+    #[Route('/user/{id}', name: 'app_user_profile', requirements: ['{id}' => '\id+'])]
+    public function showUser(User $user): Response
+    {
+        return $this->render('user/show.html.twig', [
+            'user' => $user,
+        ]);
+    }
+
     #[Route('/settings', name: 'app_user_settings')]
-    public function index(Request $request, EntityManagerInterface $entityManager): Response
+    public function settings(Request $request, EntityManagerInterface $entityManager): Response
     {
         /** @var User $user */
         $user = $this->getUser();
