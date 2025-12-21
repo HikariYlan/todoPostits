@@ -125,6 +125,7 @@
                             {% endif %}
                         </div>
                         {{ form_errors(form.tags) }}
+                        {% do form.tags.setRendered %}
                     </div>
 
                     <button type="submit" class="w-full bg-gradient-to-r {% if 'Edit' in submit_label %}from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600{% else %}from-yellow-400 to-orange-400 hover:from-yellow-500 hover:to-orange-500{% endif %} text-white font-bold py-3 rounded-lg shadow-lg transition-all duration-200 transform hover:scale-105 flex items-center justify-center">
