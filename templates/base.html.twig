@@ -19,7 +19,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-center h-16">
                     <div class="flex items-center space-x-8">
-                        <a href="{{ path('app_user_settings') }}" class="text-white hover:text-yellow-200 transition-colors duration-200 font-semibold text-lg flex items-center">
+                        <a href="{{ path('app_user_profile', {id: app.user.id}) }}" class="text-white hover:text-yellow-200 transition-colors duration-200 font-semibold text-lg flex items-center">
                             {% if app.user.avatar %}
                                 <img
                                     src="{{ path('app_user_avatar', {id: app.user.id}) }}?v={{ 'now'|date('U') }}"
