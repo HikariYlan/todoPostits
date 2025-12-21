@@ -3,28 +3,87 @@
 {% block title %}TODOs PostIt! - {{ user.username }}'s profile{% endblock %}
 
 {% block body %}
-    {% if user.avatar %}
-        <div class="flex-shrink-0 flex items-center">
-            <img
-                id="imagePreviewBig"
-                src="{{ path('app_user_avatar', {id: user.id}) }}?v={{ 'now'|date('U') }}"
-                alt="{{ user.username }} avatar"
-                class="w-20 h-20 rounded-full border-2 border-indigo-300 object-cover me-2"
-            >
+<div class="flex justify-center px-4 py-8">
+    <div class="w-full max-w-4xl">
+        <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
+            <div class="flex items-center justify-center bg-gradient-to-r from-teal-500 to-cyan-500 p-6">
+                <h1 class="text-3xl font-bold text-white text-center flex items-center justify-center">
+                    <i class="fas fa-user-circle mr-3"></i>
+                    {{ user.username }}'s Profile
+                    {% if user == app.user %}
+                        <a href="{{ path('app_user_settings') }}">
+                            <i class="fa-solid fa-gear ml-2"></i>
+                        </a>
+                    {% endif %}
+                </h1>
+            </div>
+
+            <div class="p-8">
+                <div class="flex flex-col md:flex-row items-center md:items-start gap-8">
+                    <div class="flex-shrink-0">
+                        {% if user.avatar %}
+                            <img
+                                id="imagePreviewBig"
+                                src="{{ path('app_user_avatar', {id: user.id}) }}?v={{ 'now'|date('U') }}"
+                                alt="{{ user.username }} avatar"
+                                class="w-32 h-32 rounded-full border-4 border-teal-400 object-cover shadow-lg"
+                            >
+                        {% else %}
+                            <div class="w-32 h-32 rounded-full border-4 border-teal-400 shadow-lg bg-gray-100 flex items-center justify-center">
+                                <i class="fas fa-user text-gray-400 text-5xl"></i>
+                            </div>
+                        {% endif %}
+                        <div class="flex items-center px-4 py-2">
+                            <i class="fas fa-map-marker-alt text-blue-600 mr-2"></i>
+                            <span class="text-gray-700 font-medium">{{ user.location ?? "not specified" }}</span>
+                        </div>
+
+                        <div class="flex items-center px-4 py-2">
+                            <i class="fas fa-venus-mars text-purple-600 mr-2"></i>
+                            <span class="text-gray-700 font-medium">{{ user.gender ?? "not specified" }}</span>
+                        </div>
+
+                        <div class="flex items-center px-4 py-2">
+                            <i class="fas fa-user-tag text-green-600 mr-2"></i>
+                            <span class="text-gray-700 font-medium">{{ user.pronouns ?? "not specified" }}</span>
+                        </div>
+                    </div>
+
+                    <div class="flex-grow space-y-6 text-center md:text-left">
+                        <div>
+                            <h2 class="text-4xl font-bold text-gray-800">{{ user.username }}</h2>
+                            <div class="flex items-center justify-center md:justify-start mt-2 text-gray-600 text-sm">
+                                <i class="fas fa-calendar-check mr-2"></i>
+                                <span>Organized since {{ user.creationDate|date('d/m/Y') }}</span>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            {% if user.description %}
+                                <div class="bg-gray-50 rounded-lg p-4 border-l-4 border-teal-400">
+                                    <div class="flex items-start justify-center md:justify-start">
+                                        <i class="fas fa-quote-left text-teal-600 mt-1 mr-3 flex-shrink-0"></i>
+                                        <p class="text-gray-700 italic text-lg">{{ user.description }}</p>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="bg-gray-50 rounded-lg p-4 border-l-4 border-gray-300">
+                                    <div class="flex items-start justify-center md:justify-start">
+                                        <i class="fas fa-quote-left text-gray-400 mt-1 mr-3 flex-shrink-0"></i>
+                                        <p class="text-gray-400 italic">This user has no description.</p>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    {% else %}
-        <img
-            src="{{ asset('images/circle-user-solid-full.svg') }}"
-            alt="default avatar"
-            class="w-20 h-20 rounded-full border-2 border-indigo-300 me-2"
-        >
-    {% endif %}
-    {{ user.username }}
-    {{ user.description ?? "This user has not description." }}
-    {{ user.location }}
-    {{ user.gender }}
-    {{ user.pronouns }}
-    This user started organizing themselves on {{ user.creationDate|date('d/m/Y') }}
-    <a href="{{ path('app_user_settings') }}"><i class="fa-solid fa-gear"></i></a>
+    </div>
+</div>
 {% endblock %}
 
