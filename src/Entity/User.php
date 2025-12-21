@@ -12,7 +12,6 @@ use Gedmo\Mapping\Annotation\Timestampable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Constraints\Time;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -71,7 +70,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $pronouns = null;
 
     #[ORM\Column(type: 'string', nullable: true, enumType: Gender::class)]
-    private ?string $gender = null;
+    private ?Gender $gender = null;
 
     #[ORM\Column]
     #[Timestampable(on: 'create')]
@@ -296,12 +295,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getGender(): ?string
+    public function getGender(): ?Gender
     {
         return $this->gender;
     }
 
-    public function setGender(?string $gender): static
+    public function setGender(?Gender $gender): static
     {
         $this->gender = $gender;
 
