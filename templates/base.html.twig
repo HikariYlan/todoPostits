@@ -40,12 +40,37 @@
                         <a href="{{ path('app_sticky_board') }}" class="text-white hover:text-yellow-200 transition-colors duration-200 flex items-center">
                             <i class="fa-regular fa-house me-1"></i> Sticky Notes Board
                         </a>
-                        <a href="{{ path('app_post_it_create') }}" class="text-white hover:text-yellow-200 transition-colors duration-200 flex items-center cursor-pointer">
-                            <i class="fa-regular fa-note-sticky me-1"></i> Stick a new Post-It!
-                        </a>
-                        <a href="{{ path('app_post_it_random') }}" class="text-white hover:text-yellow-200 transition-colors duration-200 flex items-center cursor-pointer">
-                            <i class="fa-solid fa-shuffle me-1"></i> Pick a random Post-It!
-                        </a>
+
+                        <div class="relative group">
+                            <button class="text-white hover:text-yellow-200 transition-colors duration-200 flex items-center cursor-pointer">
+                                <i class="fa-regular fa-note-sticky me-1"></i> PostIts
+                                <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                            </button>
+                            <div class="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                                <a href="{{ path('app_post_it_create') }}" class="flex items-center px-4 py-3 text-gray-800 hover:bg-yellow-100 rounded-t-lg transition-colors">
+                                    <i class="fa-solid fa-plus text-green-600 me-2 w-5"></i> Stick a new Post-It!
+                                </a>
+                                <a href="{{ path('app_post_it_random') }}" class="flex items-center px-4 py-3 text-gray-800 hover:bg-yellow-100 rounded-b-lg transition-colors">
+                                    <i class="fa-solid fa-shuffle text-purple-600 me-2 w-5"></i> Pick a random Post-It!
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="relative group">
+                            <button class="text-white hover:text-yellow-200 transition-colors duration-200 flex items-center cursor-pointer">
+                                <i class="fas fa-tags me-1"></i> Tags
+                                <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                            </button>
+                            <div class="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                                <a href="{{ path('app_tag') }}" class="flex items-center px-4 py-3 text-gray-800 hover:bg-yellow-100 rounded-t-lg transition-colors">
+                                    <i class="fas fa-list text-blue-600 me-2 w-5"></i> See all your tags!
+                                </a>
+                                <a href="{{ path('app_tag_create') }}" class="flex items-center px-4 py-3 text-gray-800 hover:bg-yellow-100 rounded-b-lg transition-colors">
+                                    <i class="fa-solid fa-plus text-orange-600 me-2 w-5"></i> Create a new Tag!
+                                </a>
+                            </div>
+                        </div>
+
                         <a href="{{ path('app_game') }}" class="text-white hover:text-yellow-200 transition-colors duration-200 flex items-center cursor-pointer">
                             <i class="fa-brands fa-steam me-1"></i> Reward yourself with a game!
                         </a>
