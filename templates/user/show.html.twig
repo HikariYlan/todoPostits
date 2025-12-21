@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TODOs PostIt! - {{ user.username }}'s profile{% endblock %}
+
+{% block body %}
+    {% if user.avatar %}
+        <div class="flex-shrink-0 flex items-center">
+            <img
+                id="imagePreviewBig"
+                src="{{ path('app_user_avatar', {id: user.id}) }}?v={{ 'now'|date('U') }}"
+                alt="{{ user.username }} avatar"
+                class="w-20 h-20 rounded-full border-2 border-indigo-300 object-cover me-2"
+            >
+        </div>
+    {% else %}
+        <img
+            src="{{ asset('images/circle-user-solid-full.svg') }}"
+            alt="default avatar"
+            class="w-20 h-20 rounded-full border-2 border-indigo-300 me-2"
+        >
+    {% endif %}
+    {{ user.username }}
+    {{ user.description ?? "This user has not description." }}
+    {{ user.location }}
+    {{ user.gender }}
+    {{ user.pronouns }}
+    This user started organizing themselves on {{ user.creationDate|date('d/m/Y') }}
+    <a href="{{ path('app_user_settings') }}"><i class="fa-solid fa-gear"></i></a>
+{% endblock %}
+
