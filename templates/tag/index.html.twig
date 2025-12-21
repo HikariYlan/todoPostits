@@ -3,16 +3,64 @@
 {% block title %}TODOs PostIt! - Tags{% endblock %}
 
 {% block body %}
+<div class="mb-8 text-center">
+    <h1 class="text-4xl font-bold text-gray-800 mb-2 flex items-center justify-center">
+        <i class="fas fa-tags mr-3 text-gray-700"></i>
+        My Tags
+    </h1>
+    <p class="text-gray-600">Organize your tasks with colorful tags</p>
+</div>
 
-    <ul>
-        {% for tag in tags %}
-            <li class="flex items-center">
-                <p class="rounded-lg bg-{{ tag.color }}-500 border-{{ tag.color }}-600 border-2 m-2 px-1">{{ tag.name }}</p>
-                <a href="{{ path('app_tag_edit', {id: tag.id}) }}"><i class="fa-solid fa-pen"></i></a>
-                {{ include('tag/delete.html.twig', {id: tag.id}) }}
-            </li>
-        {% endfor %}
-    </ul>
-    <button class="bg-from-to-r from-yellow-300 to-yellow-500"><a href="{{ path('app_tag_create') }}">Create a new tag</a></button>
+{% if tags is empty %}
+    <div class="max-w-2xl mx-auto">
+        <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
+            <div class="p-12 text-center">
+                <i class="fas fa-tags fa-7x text-gray-300 mb-4"></i>
+                <h2 class="text-3xl font-bold text-gray-800 mb-3">No Tags Yet!</h2>
+                <p class="text-gray-600 text-lg mb-8">
+                    Create your first tag to organize your post-its by categories or priorities!
+                </p>
+                <a href="{{ path('app_tag_create') }}" class="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-yellow-400 to-orange-400 text-white font-bold text-lg rounded-lg shadow-lg hover:from-yellow-500 hover:to-orange-500 transition-all duration-200 transform hover:scale-105">
+                    <i class="fas fa-plus mr-2"></i>
+                    Create Your First Tag
+                </a>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="max-w-4xl mx-auto">
+        <div class="bg-white rounded-2xl shadow-2xl overflow-hidden p-8">
+            <ul class="space-y-3 mb-8">
+                {% for tag in tags %}
+                    <li class="flex items-center justify-between bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg p-4 shadow hover:shadow-md transition-shadow">
+                        <span class="inline-block rounded-full bg-{{ tag.color }}-500 border-{{ tag.color }}-600 border-2 px-4 py-2 text-white font-bold shadow-md">
+                            {{ tag.name }}
+                        </span>
+                        <div class="flex items-center gap-4">
+                            <a href="{{ path('app_tag_edit', {id: tag.id}) }}" class="text-blue-600 hover:text-blue-800 transition-colors">
+                                <i class="fas fa-pen"></i>
+                            </a>
+                            {{ include('tag/delete.html.twig', {id: tag.id}) }}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <div class="text-center pt-6 border-t border-gray-200">
+                <a href="{{ path('app_tag_create') }}" class="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-yellow-400 to-orange-400 hover:from-yellow-500 hover:to-orange-500 text-white font-bold text-lg rounded-lg shadow-lg transition-all duration-200 transform hover:scale-105">
+                    <i class="fas fa-plus mr-2"></i>
+                    Create a New Tag
+                </a>
+            </div>
+        </div>
+
+        <div class="text-center mt-8">
+            <a href="{{ path('app_sticky_board') }}" class="text-gray-600 hover:text-yellow-600 font-semibold transition-colors">
+                <i class="fas fa-arrow-left mr-2"></i>
+                Back to sticky notes board
+            </a>
+        </div>
+    </div>
+{% endif %}
 {% endblock %}
 
